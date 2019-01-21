@@ -58,7 +58,8 @@ import {
     enum Licences {
         CLA, //CLA licence 
         FairDealing, //\"fair dealing\" exception
-        Research //\"research and private study\" exception
+        Research, //\"research and private study\" exception
+        Unlicensed
     };
     namespace Licences {
         export function keys() {
@@ -135,6 +136,9 @@ export class AppComponent implements OnInit, OnDestroy {
     
     itemReproductions: { type: Materials, reproduction: Reproductions, reproductionUses: ItemReproductionUse[] }[] = [];
     itemUses: { use: Uses, materialReproductions: ItemMaterialReproduction[] }[] = [];
+    
+    filteredItemReproductions: { type: Materials, reproduction: Reproductions, reproductionUses: ItemReproductionUse[] }[] = [];
+    filteredItemUses: { use: Uses, materialReproductions: ItemMaterialReproduction[] }[] = [];
     
     /** BEGIN EDITABLE MATERIAL **/
     
@@ -324,7 +328,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "reproduction": Reproductions.ScoreExtract, 
             "use": Uses.Website, 
             "status": Statuses.Forbidden, 
-            "licences": [],
+            "licences": [Licences.Unlicensed],
             "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons." 
         },
         { 
@@ -332,7 +336,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "reproduction": Reproductions.ScoreExtract, 
             "use": Uses.Share, 
             "status": Statuses.Forbidden, 
-            "licences": [],
+            "licences": [Licences.Unlicensed],
             "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons." 
         },
 
@@ -341,7 +345,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "reproduction": Reproductions.ChapterPrinted, 
             "use": Uses.Presentation, 
             "status": Statuses.NA,
-            "licences": [],
+            "licences": [Licences.FairDealing],
             "explanation": "under \"fair dealing\" exception" 
         },
         { 
@@ -349,7 +353,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "reproduction": Reproductions.ChapterPrinted, 
             "use": Uses.Recording,
             "status": Statuses.NA,
-            "licences": [],
+            "licences": [Licences.FairDealing],
             "explanation": "under \"fair dealing\" exception" },
         { 
             "type": Materials.Text, 
@@ -380,7 +384,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "reproduction": Reproductions.ChapterPrinted, 
             "use": Uses.Website, 
             "status": Statuses.Forbidden, 
-            "licences": [], 
+            "licences": [Licences.Unlicensed], 
             "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons." 
         },
         { 
@@ -388,7 +392,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "reproduction": Reproductions.ChapterPrinted, 
             "use": Uses.Share, 
             "status": Statuses.Forbidden, 
-            "licences": [], 
+            "licences": [Licences.Unlicensed], 
             "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons." 
         },
     ];
@@ -491,6 +495,11 @@ export class AppComponent implements OnInit, OnDestroy {
         for (let reproduction in this.reproductionsType.keys()) {
             this.filters['reproductions'][this.reproductionsType[reproduction]] = true;
         }
+        
+        //now let's create filtered lists which we'll actually display
+        this.filteredItemReproductions = this.itemReproductions;
+        this.filteredItemUses = this.itemUses;
+        
         /*for (let key of this.filters['uses'].keys()) {
             console.log('bla');
             console.log(this.filters['uses'][key]);
@@ -498,10 +507,124 @@ export class AppComponent implements OnInit, OnDestroy {
     }
     
     onFilterChange () {
-        //need to filter both: this.itemReproductions and this.itemUses
-        //var filteredEvents = events.filter(function(event){
-        //    return event.date == '22-02-2016';
-        //});
+        this.filteredItemReproductions = []
+        //basically run though and only transfer to this.filteredItemReproductions and this.filteredItemUses those items which match filters
+        for (let itemReproduction of this.itemReproductions) {
+            let newItemReproduction = {type: null, reproduction: null, reproductionUses: []};
+            let add = true;  //add unless one of below is false
+            //type
+            //console.log(itemReproduction.type);
+            //console.log(this.filters['materials'][this.materialsType[itemReproduction.type]]);
+            
+            if (this.filters['materials'][this.materialsType[itemReproduction.type]] === false){
+                add = false;
+            } else {
+                newItemReproduction.type = itemReproduction.type;
+            }
+            //reproduction
+            if (this.filters['reproductions'][this.reproductionsType[itemReproduction.reproduction]] === false){
+                add = false;
+            } else {
+                newItemReproduction.reproduction = itemReproduction.reproduction;
+            }
+            //reproductionUses
+            for (let reproductionUse of itemReproduction.reproductionUses) {
+                let addReproductionUse = true;
+                let newReproductionUse: ItemReproductionUse = {use: null, status: null, licences: [], explanation: null };
+                if (this.filters['uses'][this.usesType[reproductionUse.use]] === false) {
+                    addReproductionUse = false;        
+                } else {
+                    newReproductionUse.use = reproductionUse.use;
+                }
+                if (this.filters['statuses'][this.statusesType[reproductionUse.status]] === false) {
+                    addReproductionUse = false;        
+                } else {
+                    newReproductionUse.status = reproductionUse.status;
+                }
+                //licences
+                for (let licence of reproductionUse.licences) {
+                    let addLicence = true;   
+                    let newLicence: Licences;   
+                    if (this.filters['licences'][this.licencesType[licence]] === false) {
+                        addLicence = false;        
+                    } else {
+                        newLicence = licence;
+                    }
+                    if (addLicence){
+                       newReproductionUse.licences.push(newLicence); 
+                    }
+                }
+                newReproductionUse.explanation = reproductionUse.explanation; //need this and can't filter by
+                if (addReproductionUse && newReproductionUse.licences.length > 0){
+                   newItemReproduction.reproductionUses.push(newReproductionUse); 
+                }
+            }
+            if(newItemReproduction.reproductionUses.length === 0) {
+                add = false;
+            }
+            //if anything left in it and not excluded by filters then add, otherwise, don't add
+            if (add){
+               this.filteredItemReproductions.push(newItemReproduction); 
+            }
+        }
+        this.filteredItemUses = []
+        console.log(this.itemUses);
+        for (let itemUse of this.itemUses) {
+            let newItemUse = {use: null, materialReproductions: []};
+            let add = true;  //add unless one of below is false
+            //use
+            if (this.filters['uses'][this.usesType[itemUse.use]] === false) {
+                add = false;        
+            } else {
+                newItemUse.use = itemUse.use;
+            }
+            //materialReproductions
+            for (let materialReproduction of itemUse.materialReproductions) {
+                let addMaterial = true;
+                let newMaterialReproduction = {type: null, reproduction: null, status: null, licences: [], explanation: null}
+                if (this.filters['materials'][this.materialsType[materialReproduction.type]] === false){
+                    addMaterial = false;
+                } else {
+                    newMaterialReproduction.type = materialReproduction.type;
+                }
+                if (this.filters['reproductions'][this.reproductionsType[materialReproduction.reproduction]] === false){
+                    addMaterial = false;
+                } else {
+                    newMaterialReproduction.reproduction = materialReproduction.reproduction;
+                }
+                if (this.filters['statuses'][this.statusesType[materialReproduction.status]] === false) {
+                    addMaterial = false;        
+                } else {
+                    newMaterialReproduction.status = materialReproduction.status;
+                }
+                //licences
+                for (let licence of materialReproduction.licences) {
+                    let addLicence = true;   
+                    let newLicence: Licences;   
+                    if (this.filters['licences'][this.licencesType[licence]] === false) {
+                        addLicence = false;        
+                    } else {
+                        newLicence = licence;
+                    }
+                    if (addLicence){
+                       newMaterialReproduction.licences.push(newLicence); 
+                    }
+                }
+                newMaterialReproduction.explanation = materialReproduction.explanation; //need this and can't filter by
+                if (addMaterial && newMaterialReproduction.licences.length > 0){
+                   newItemUse.materialReproductions.push(newMaterialReproduction); 
+                }
+            }
+            if(newItemUse.materialReproductions.length === 0) {
+                add = false;
+            }
+            //if anything left in it and not excluded by filters then add, otherwise, don't add
+            if (add){
+               this.filteredItemUses.push(newItemUse); 
+            }
+        }
+        //console.log(this.itemReproductions);
+        console.log(this.filteredItemUses);
     }
     
     ngOnDestroy(): void {

@@ -1,5 +1,32 @@
+:host {
+  min-height: 100%;
+}
+
+#copyright-container {
+  min-height: 100vh !important;
+}
+
+mat-sidenav-container {
+  min-height: 100vh !important;
+  padding-top: 64px;
+}
+
+mat-toolbar {
+  height: 64px;
+  position: fixed;
+  z-index: 100;
+  width: 100%  !important;
+}
+
+mat-sidenav {
+  padding: 64px 1em 1em 1em;
+  min-width: 200px;
+  min-height: 100%;
+}
+
 .header-icon {
   font-size: 40px;
+  color: rgba(0,0,0,.7);
 }
 .status-icon{
   font-size: 17px;
@@ -38,14 +65,11 @@ h4 {
   font-family: Roboto,"Helvetica Neue",sans-serif;
 }
 
-mat-sidenav {
-  min-width: 200px;
-  padding: 1em;
-}
 .example-sidenav-container {
   /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
      causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
   flex: 1;
+  /*min-height: 100%;*/
 }
 
 .example-is-mobile .example-sidenav-container {

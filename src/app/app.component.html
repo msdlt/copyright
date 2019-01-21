@@ -1,92 +1,93 @@
-<mat-toolbar color="primary" class="example-toolbar">
-    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-    <h1 class="example-app-name">Copyright for instruction</h1>
-</mat-toolbar>
-<mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
-        <h4>Uses</h4>
-        <mat-checkbox class="filter" *ngFor="let use of usesType.keys()" [(ngModel)]="filters['uses'][usesType[use]]">{{useDescriptions[usesType[use]]}}</mat-checkbox>
-        <h4>Usability</h4>
-        <mat-checkbox class="filter" *ngFor="let status of statusesType.keys()" [(ngModel)]="filters['statuses'][statusesType[status]]">{{statusDescriptions[statusesType[status]]}}</mat-checkbox>
-        <h4>Materials</h4>
-        <mat-checkbox class="filter" *ngFor="let material of materialsType.keys()" [(ngModel)]="filters['materials'][materialsType[material]]">{{materialsType[material]}}</mat-checkbox>
-        <h4>Licences</h4>
-        <mat-checkbox class="filter" *ngFor="let licence of licencesType.keys()" [(ngModel)]="filters['licences'][licencesType[licence]]">{{licencesType[licence]}}</mat-checkbox>
-        <h4>Reproductions</h4>
-        <mat-checkbox class="filter" *ngFor="let reproduction of reproductionsType.keys()" [(ngModel)]="filters['reproductions'][reproductionsType[reproduction]]">{{reproductionDescriptions[reproductionsType[reproduction]]}}</mat-checkbox>
-    </mat-sidenav>
-    <mat-sidenav-content>
-        <mat-tab-group>
-            <mat-tab label="By material">
-                <div fxLayout='row wrap'>
-                    <div *ngFor="let item of itemReproductions" fxFlex.xs="100%" fxFlex.sm="50%" fxFlex.md="33%" fxFlex.lg="25%" fxFlex.xl="20%">
-                        <mat-card>
-                            <mat-card-header>
-                                <div mat-card-avatar><fa-icon [icon]="faBook" class="header-icon"></fa-icon></div>
-                                <mat-card-title>{{EnumTable.Materials[item.type]}}</mat-card-title>
-                                <mat-card-subtitle>{{reproductionDescriptions[EnumTable.Reproductions[item.reproduction]]}}</mat-card-subtitle>
-                            </mat-card-header>
-                            <mat-accordion>
-                                <mat-expansion-panel *ngFor="let reproductionUse of item.reproductionUses">
-                                    <mat-expansion-panel-header title="{{statusDescriptions[EnumTable.Statuses[reproductionUse.status]]}} - click for details">
-                                        <mat-panel-title>
-                                            <fa-icon *ngIf="reproductionUse.status == 0" [icon]="faCheckCircle" class="status-icon free"></fa-icon>
-                                            <fa-icon *ngIf="reproductionUse.status == 1" [icon]="faCheckCircle" class="status-icon cla-only"></fa-icon>
-                                            <fa-icon *ngIf="reproductionUse.status == 2" [icon]="faQuestionCircle" class="status-icon maybe"></fa-icon>
-                                            <fa-icon *ngIf="reproductionUse.status == 3" [icon]="faTimesCircle" class="status-icon forbidden"></fa-icon>
-                                            <fa-icon *ngIf="reproductionUse.status == 4" [icon]="faTimesCircle" class="status-icon na"></fa-icon>
-                                            {{useDescriptions[EnumTable.Uses[reproductionUse.use]]}}
-                                        </mat-panel-title>
-                                    </mat-expansion-panel-header>
-                                    <h4>{{statusDescriptions[EnumTable.Statuses[reproductionUse.status]]}}</h4>
-                                    <span *ngIf="reproductionUse.status != 4">{{reproductionUse.explanation}}</span>
-                                    <span *ngIf="reproductionUse.status == 4">for this setting</span>
-                                </mat-expansion-panel>
-                            </mat-accordion>
-                        </mat-card>    
+<div id="copyright-container">
+    <mat-toolbar color="primary" class="example-toolbar">
+        <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+        <h1 class="example-app-name">Copyright for instruction</h1>
+    </mat-toolbar>
+    <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+            <h4>Materials</h4>
+            <mat-checkbox class="filter" *ngFor="let material of materialsType.keys()" [(ngModel)]="filters['materials'][materialsType[material]]" (change)="onFilterChange()">{{materialsType[material]}}</mat-checkbox>
+            <h4>Uses</h4>
+            <mat-checkbox class="filter" *ngFor="let use of usesType.keys()" [(ngModel)]="filters['uses'][usesType[use]]" (change)="onFilterChange()">{{useDescriptions[usesType[use]]}}</mat-checkbox>
+            <h4>Reproductions</h4>
+            <mat-checkbox class="filter" *ngFor="let reproduction of reproductionsType.keys()" [(ngModel)]="filters['reproductions'][reproductionsType[reproduction]]" (change)="onFilterChange()">{{reproductionDescriptions[reproductionsType[reproduction]]}}</mat-checkbox>
+            <h4>Usability</h4>
+            <mat-checkbox class="filter" *ngFor="let status of statusesType.keys()" [(ngModel)]="filters['statuses'][statusesType[status]]" (change)="onFilterChange()">{{statusDescriptions[statusesType[status]]}}</mat-checkbox>
+            <h4>Licences</h4>
+            <mat-checkbox class="filter" *ngFor="let licence of licencesType.keys()" [(ngModel)]="filters['licences'][licencesType[licence]]" (change)="onFilterChange()">{{licencesType[licence]}}</mat-checkbox>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <mat-tab-group>
+                <mat-tab label="By material">
+                    <div fxLayout='row wrap'>
+                        <div *ngFor="let item of filteredItemReproductions" fxFlex.xs="100%" fxFlex.sm="50%" fxFlex.md="33%" fxFlex.lg="25%" fxFlex.xl="20%">
+                            <mat-card>
+                                <mat-card-header>
+                                    <div mat-card-avatar><fa-icon [icon]="faBook" class="header-icon"></fa-icon></div>
+                                    <mat-card-title>{{EnumTable.Materials[item.type]}}</mat-card-title>
+                                    <mat-card-subtitle>{{reproductionDescriptions[EnumTable.Reproductions[item.reproduction]]}}</mat-card-subtitle>
+                                </mat-card-header>
+                                <mat-accordion>
+                                    <mat-expansion-panel *ngFor="let reproductionUse of item.reproductionUses">
+                                        <mat-expansion-panel-header title="{{statusDescriptions[EnumTable.Statuses[reproductionUse.status]]}} - click for details">
+                                            <mat-panel-title>
+                                                <fa-icon *ngIf="reproductionUse.status == 0" [icon]="faCheckCircle" class="status-icon free"></fa-icon>
+                                                <fa-icon *ngIf="reproductionUse.status == 1" [icon]="faCheckCircle" class="status-icon cla-only"></fa-icon>
+                                                <fa-icon *ngIf="reproductionUse.status == 2" [icon]="faQuestionCircle" class="status-icon maybe"></fa-icon>
+                                                <fa-icon *ngIf="reproductionUse.status == 3" [icon]="faTimesCircle" class="status-icon forbidden"></fa-icon>
+                                                <fa-icon *ngIf="reproductionUse.status == 4" [icon]="faTimesCircle" class="status-icon na"></fa-icon>
+                                                {{useDescriptions[EnumTable.Uses[reproductionUse.use]]}}
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <h4>{{statusDescriptions[EnumTable.Statuses[reproductionUse.status]]}}</h4>
+                                        <span *ngIf="reproductionUse.status != 4">{{reproductionUse.explanation}}</span>
+                                        <span *ngIf="reproductionUse.status == 4">for this setting</span>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                            </mat-card>    
+                        </div>
                     </div>
-                </div>
-            </mat-tab>
-            <mat-tab label="By use">
-                <div fxLayout='row wrap'>
-                    <div *ngFor="let item of itemUses" fxFlex.xs="100%" fxFlex.sm="50%" fxFlex.md="33%" fxFlex.lg="25%" fxFlex.xl="20%">
-                        <mat-card>
-                            <mat-card-header>
-                                <div *ngIf="item.use == 0" mat-card-avatar><fa-icon [icon]="faChalkboardTeacher" class="header-icon"></fa-icon></div>
-                                <div *ngIf="item.use == 1" mat-card-avatar><fa-icon [icon]="faVideo" class="header-icon"></fa-icon></div>
-                                <div *ngIf="item.use == 2" mat-card-avatar><fa-icon [icon]="faFile" class="header-icon"></fa-icon></div>
-                                <div *ngIf="item.use == 3" mat-card-avatar><fa-icon [icon]="faComments" class="header-icon"></fa-icon></div>
-                                <div *ngIf="item.use == 4" mat-card-avatar><fa-icon [icon]="faEnvelope" class="header-icon"></fa-icon></div>
-                                <div *ngIf="item.use == 5" mat-card-avatar><fa-icon [icon]="faExternalLinkAlt" class="header-icon"></fa-icon></div>
-                                <div *ngIf="item.use == 6" mat-card-avatar><fa-icon [icon]="faShareSquare" class="header-icon"></fa-icon></div>
-                                <mat-card-title>{{EnumTable.Uses[item.use]}}</mat-card-title>
-                                <mat-card-subtitle>{{useDescriptions[EnumTable.Uses[item.use]]}}</mat-card-subtitle>
-                            </mat-card-header>
-                            <mat-accordion>
-                                <mat-expansion-panel *ngFor="let materialReproduction of item.materialReproductions">
-                                    <mat-expansion-panel-header title="{{statusDescriptions[EnumTable.Statuses[materialReproduction.status]]}} - click for details">
-                                        <mat-panel-title>
-                                            <fa-icon *ngIf="materialReproduction.status == 0" [icon]="faCheckCircle" class="status-icon free"></fa-icon>
-                                            <fa-icon *ngIf="materialReproduction.status == 1" [icon]="faCheckCircle" class="status-icon cla-only"></fa-icon>
-                                            <fa-icon *ngIf="materialReproduction.status == 2" [icon]="faQuestionCircle" class="status-icon maybe"></fa-icon>
-                                            <fa-icon *ngIf="materialReproduction.status == 3" [icon]="faTimesCircle" class="status-icon forbidden"></fa-icon>
-                                            <fa-icon *ngIf="materialReproduction.status == 4" [icon]="faTimesCircle" class="status-icon na"></fa-icon>
-                                            {{reproductionDescriptions[EnumTable.Reproductions[materialReproduction.reproduction]]}} ({{EnumTable.Materials[materialReproduction.type]}})
-                                        </mat-panel-title>
-                                    </mat-expansion-panel-header>
-                                    <h4>{{statusDescriptions[EnumTable.Statuses[materialReproduction.status]]}}</h4>
-                                    <span *ngIf="materialReproduction.status != 4">{{materialReproduction.explanation}}</span>
-                                    <span *ngIf="materialReproduction.status == 4">for this setting</span>
-                                </mat-expansion-panel>
-                            </mat-accordion>
-                        </mat-card>    
+                </mat-tab>
+                <mat-tab label="By use">
+                    <div fxLayout='row wrap'>
+                        <div *ngFor="let item of filteredItemUses" fxFlex.xs="100%" fxFlex.sm="50%" fxFlex.md="33%" fxFlex.lg="25%" fxFlex.xl="20%">
+                            <mat-card>
+                                <mat-card-header>
+                                    <div *ngIf="item.use == 0" mat-card-avatar><fa-icon [icon]="faChalkboardTeacher" class="header-icon"></fa-icon></div>
+                                    <div *ngIf="item.use == 1" mat-card-avatar><fa-icon [icon]="faVideo" class="header-icon"></fa-icon></div>
+                                    <div *ngIf="item.use == 2" mat-card-avatar><fa-icon [icon]="faFile" class="header-icon"></fa-icon></div>
+                                    <div *ngIf="item.use == 3" mat-card-avatar><fa-icon [icon]="faComments" class="header-icon"></fa-icon></div>
+                                    <div *ngIf="item.use == 4" mat-card-avatar><fa-icon [icon]="faEnvelope" class="header-icon"></fa-icon></div>
+                                    <div *ngIf="item.use == 5" mat-card-avatar><fa-icon [icon]="faExternalLinkAlt" class="header-icon"></fa-icon></div>
+                                    <div *ngIf="item.use == 6" mat-card-avatar><fa-icon [icon]="faShareSquare" class="header-icon"></fa-icon></div>
+                                    <mat-card-title>{{EnumTable.Uses[item.use]}}</mat-card-title>
+                                    <mat-card-subtitle>{{useDescriptions[EnumTable.Uses[item.use]]}}</mat-card-subtitle>
+                                </mat-card-header>
+                                <mat-accordion>
+                                    <mat-expansion-panel *ngFor="let materialReproduction of item.materialReproductions">
+                                        <mat-expansion-panel-header title="{{statusDescriptions[EnumTable.Statuses[materialReproduction.status]]}} - click for details">
+                                            <mat-panel-title>
+                                                <fa-icon *ngIf="materialReproduction.status == 0" [icon]="faCheckCircle" class="status-icon free"></fa-icon>
+                                                <fa-icon *ngIf="materialReproduction.status == 1" [icon]="faCheckCircle" class="status-icon cla-only"></fa-icon>
+                                                <fa-icon *ngIf="materialReproduction.status == 2" [icon]="faQuestionCircle" class="status-icon maybe"></fa-icon>
+                                                <fa-icon *ngIf="materialReproduction.status == 3" [icon]="faTimesCircle" class="status-icon forbidden"></fa-icon>
+                                                <fa-icon *ngIf="materialReproduction.status == 4" [icon]="faTimesCircle" class="status-icon na"></fa-icon>
+                                                {{reproductionDescriptions[EnumTable.Reproductions[materialReproduction.reproduction]]}} ({{EnumTable.Materials[materialReproduction.type]}})
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <h4>{{statusDescriptions[EnumTable.Statuses[materialReproduction.status]]}}</h4>
+                                        <span *ngIf="materialReproduction.status != 4">{{materialReproduction.explanation}}</span>
+                                        <span *ngIf="materialReproduction.status == 4">for this setting</span>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                            </mat-card>    
+                        </div>
                     </div>
-                </div>
-            </mat-tab>
-        </mat-tab-group>
-      
-    </mat-sidenav-content>
-</mat-sidenav-container>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
 
 
 
