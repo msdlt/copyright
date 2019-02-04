@@ -5,12 +5,20 @@
     </mat-toolbar>
     <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
         <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+            <div fxLayout='row'>
+                    
+            </div>
             <h4>Materials</h4>
-            <mat-checkbox class="filter" *ngFor="let material of materialsType.keys()" [(ngModel)]="filters['materials'][materialsType[material]]" (change)="onFilterChange()">{{materialsType[material]}}</mat-checkbox>
+            <div *ngFor="let material of materialsType.keys()">
+                <mat-checkbox class="filter" [(ngModel)]="filters['materials'][materialsType[material]]" [(indeterminate)]="filters['materialsIndeterminacy'][materialsType[material]]" (change)="onFilterChange($event, 'material_'+materialsType[material])">{{materialsType[material]}}</mat-checkbox>
+                <div *ngFor="let reproduction of materialChildren[material]" class="nested-reproduction">
+                    <mat-checkbox class="filter" [(ngModel)]="filters['reproductions'][reproductionsType[reproduction]]" (change)="onFilterChange($event, 'reproduction_'+reproductionsType[reproduction])">{{reproductionDescriptions[reproductionsType[reproduction]]}}</mat-checkbox>
+                </div>
+            </div>
             <h4>Uses</h4>
             <mat-checkbox class="filter" *ngFor="let use of usesType.keys()" [(ngModel)]="filters['uses'][usesType[use]]" (change)="onFilterChange()">{{useDescriptions[usesType[use]]}}</mat-checkbox>
-            <h4>Reproductions</h4>
-            <mat-checkbox class="filter" *ngFor="let reproduction of reproductionsType.keys()" [(ngModel)]="filters['reproductions'][reproductionsType[reproduction]]" (change)="onFilterChange()">{{reproductionDescriptions[reproductionsType[reproduction]]}}</mat-checkbox>
+            <!--h4>Reproductions</h4>
+            <mat-checkbox class="filter" *ngFor="let reproduction of reproductionsType.keys()" [(ngModel)]="filters['reproductions'][reproductionsType[reproduction]]" (change)="onFilterChange()">{{reproductionDescriptions[reproductionsType[reproduction]]}}</mat-checkbox-->
             <h4>Usability</h4>
             <mat-checkbox class="filter" *ngFor="let status of statusesType.keys()" [(ngModel)]="filters['statuses'][statusesType[status]]" (change)="onFilterChange()">{{statusDescriptions[statusesType[status]]}}</mat-checkbox>
             <h4>Licences</h4>
@@ -23,7 +31,13 @@
                         <div *ngFor="let item of filteredItemReproductions" fxFlex.xs="100%" fxFlex.sm="50%" fxFlex.md="33%" fxFlex.lg="25%" fxFlex.xl="20%">
                             <mat-card>
                                 <mat-card-header>
-                                    <div mat-card-avatar><fa-icon [icon]="faBook" class="header-icon"></fa-icon></div>
+                                    <div mat-card-avatar>
+                                        <fa-icon *ngIf="item.type == 0" [icon]="faBook" class="header-icon"></fa-icon>
+                                        <fa-icon *ngIf="item.type == 1" [icon]="faFilm" class="header-icon"></fa-icon>
+                                        <fa-icon *ngIf="item.type == 2" [icon]="faVolumeUp" class="header-icon"></fa-icon>
+                                        <fa-icon *ngIf="item.type == 3" [icon]="faImage" class="header-icon"></fa-icon>
+                                        <fa-icon *ngIf="item.type == 4" [icon]="faBroadcastTower" class="header-icon"></fa-icon>
+                                    </div>
                                     <mat-card-title>{{EnumTable.Materials[item.type]}}</mat-card-title>
                                     <mat-card-subtitle>{{reproductionDescriptions[EnumTable.Reproductions[item.reproduction]]}}</mat-card-subtitle>
                                 </mat-card-header>
@@ -57,7 +71,7 @@
                                     <div *ngIf="item.use == 1" mat-card-avatar><fa-icon [icon]="faVideo" class="header-icon"></fa-icon></div>
                                     <div *ngIf="item.use == 2" mat-card-avatar><fa-icon [icon]="faFile" class="header-icon"></fa-icon></div>
                                     <div *ngIf="item.use == 3" mat-card-avatar><fa-icon [icon]="faComments" class="header-icon"></fa-icon></div>
-                                    <div *ngIf="item.use == 4" mat-card-avatar><fa-icon [icon]="faEnvelope" class="header-icon"></fa-icon></div>
+                                    <!--div *ngIf="item.use == 4" mat-card-avatar><fa-icon [icon]="faEnvelope" class="header-icon"></fa-icon></div-->
                                     <div *ngIf="item.use == 5" mat-card-avatar><fa-icon [icon]="faExternalLinkAlt" class="header-icon"></fa-icon></div>
                                     <div *ngIf="item.use == 6" mat-card-avatar><fa-icon [icon]="faShareSquare" class="header-icon"></fa-icon></div>
                                     <mat-card-title>{{EnumTable.Uses[item.use]}}</mat-card-title>

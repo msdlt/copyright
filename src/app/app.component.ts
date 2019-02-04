@@ -9,9 +9,14 @@ import {
     faVideo,
     faFile,
     faComments,
-    faEnvelope,
+    //faEnvelope,
     faExternalLinkAlt,
-    faShareSquare
+    faShareSquare,
+    faImage,
+    faFilm,
+    faVolumeUp,
+    faBroadcastTower
+    
 } from '@fortawesome/free-solid-svg-icons';
 
     
@@ -20,7 +25,7 @@ import {
         Recording, //Recorded presentation or lecture, faVideo
         Handout, //Distribute as a handout, faFile
         VLE, //Embed in VLE materials, faComments
-        Email, //Share by email, faEnvelope
+        //Email, //Share by email, faEnvelope
         Website, //Use on a public website or in an Open Educational Resource (OER), faExternalLinkAlt
         Share //Share it on social media or via a cloud service, faShareSquare
     };
@@ -44,10 +49,11 @@ import {
     }
 
     enum Materials {
-        Text, 
-        Video, 
-        Audio, 
-        Image 
+        Text,  //0
+        Video, //1
+        Audio, //2
+        Image, //3
+        Broadcast //4
     };
     namespace Materials {
         export function keys() {
@@ -57,8 +63,13 @@ import {
 
     enum Licences {
         CLA, //CLA licence 
-        FairDealing, //\"fair dealing\" exception
-        Research, //\"research and private study\" exception
+        ERA, //ERA licence
+        YouTube, //Youtube T&C
+        Section30, //Quotation (criticism and review)
+        Section31A31B, //Accessible copies for disabled users
+        Section32, //Instruction for illustration exception subject to \"fair dealing\"
+        Section34, //Performing or playing a work for educational purposes
+        //Research, //\"research and private study\" exception
         Unlicensed
     };
     namespace Licences {
@@ -71,8 +82,24 @@ import {
         Quotation, //Quotation
         TextExtract, //Extract <400 words
         ScoreExtract, //Extract from music score
-        ChapterPrinted//Printed book chapter (photocopy or scan of printed book)
+        ChapterPrinted,//Printed book chapter
+        ArticlePrinted,//Printed journal article
+        ChaptereBook,//eBook chapter
+        ArticleeJournal,//eJournal article
+        Book,//Entire book, journal or music score
+        ImageInternet, //Image from the internet
+        ImageJournalBook, //Image from a journal or book
+        BroadcastBoxOf, //Programme from Box of Broadcasts
+        BroadcastExtract, //Extract from a TV or radio broadcast
+        Broadcast, //Entire TV or radio broadcast
+        FilmYouTubeUnofficial, //YouTube (untrusted channel)
+        FilmYouTubeOfficial, //YouTube (official channel)
+        FilmExtract, //Extract from a film (DVD/digital) 
+        Film, //Entire film 
+        MusicExtract, //Extract from commercial piece of music 
+        SoundRecording //Commercial sound recording
     };
+        
     namespace Reproductions {
         export function keys() {
             return Object.keys(Reproductions).filter(k => !isNaN(Number(k)));
@@ -109,9 +136,13 @@ export class AppComponent implements OnInit, OnDestroy {
     faVideo = faVideo;
     faFile = faFile;
     faComments = faComments;
-    faEnvelope = faEnvelope;
+    //faEnvelope = faEnvelope;
     faExternalLinkAlt = faExternalLinkAlt;
     faShareSquare = faShareSquare;
+    faImage = faImage;
+    faFilm = faFilm;
+    faVolumeUp = faVolumeUp;
+    faBroadcastTower = faBroadcastTower;
     
     mobileQuery: MediaQueryList;
     
@@ -148,7 +179,7 @@ export class AppComponent implements OnInit, OnDestroy {
         "Recording": "Recorded presentation or lecture",  
         "Handout": "Distribute as a handout", 
         "VLE": "Embed in VLE materials", 
-        "Email": "Share by email", 
+        //"Email": "Share by email", 
         "Website": "Public website or Open Educational Resource (OER)", 
         "Share": "Share via social media/cloud service"
     }
@@ -157,7 +188,22 @@ export class AppComponent implements OnInit, OnDestroy {
         "Quotation": "Quotation",
         "TextExtract": "Extract <400 words",
         "ScoreExtract": "Extract from music score",
-        "ChapterPrinted": "Printed book chapter (photocopy or scan of printed book)"
+        "ChapterPrinted": "Printed book chapter",
+        "ArticlePrinted": "Printed journal article",
+        "ChaptereBook": "eBook chapter",
+        "ArticleeJournal": "eJournal article",
+        "Book": "Entire book, journal or music score",
+        "ImageInternet": "Image from the internet",
+        "ImageJournalBook": "Image from a journal or book",
+        "BroadcastBoxOf": "Programme from Box of Broadcasts",
+        "BroadcastExtract": "Extract from a TV or radio broadcast",
+        "Broadcast": "Entire TV or radio broadcast",
+        "FilmYouTubeUnofficial": "YouTube (untrusted channel)",
+        "FilmYouTubeOfficial": "YouTube (official channel)",
+        "FilmExtract": "Extract from a film (DVD/digital)",
+        "Film": "Entire film",
+        "MusicExtract": "Extract from commercial piece of music",
+        "SoundRecording": "Commercial sound recording"
     };
     
     statusDescriptions = {
@@ -168,13 +214,17 @@ export class AppComponent implements OnInit, OnDestroy {
         "NA": "Not appropriate"
     };
     
+    //setup which reproductions belong to which material
+    materialChildren: any = new Array();
+        
     items: { type: Materials, reproduction: Reproductions, use: Uses, status: Statuses, licences: Licences[], explanation: string }[] = [
+        //TEXT - Quotation
         { 
             "type": Materials.Text, 
             "reproduction": Reproductions.Quotation, 
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
-            "licences": [Licences.CLA, Licences.FairDealing], 
+            "licences": [Licences.CLA, Licences.Section32, Licences.Section30, Licences.Section30], 
             "explanation": "under terms of CLA licence or \"fair dealing\" exception" 
         },
         { 
@@ -182,7 +232,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "reproduction": Reproductions.Quotation, 
             "use": Uses.Recording, 
             "status": Statuses.Free, 
-            "licences": [Licences.CLA, Licences.FairDealing], 
+            "licences": [Licences.CLA, Licences.Section32, Licences.Section30], 
             "explanation": "under terms of CLA licence or \"fair dealing\" exception" 
         },
         { 
@@ -190,7 +240,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "reproduction": Reproductions.Quotation, 
             "use": Uses.Handout, 
             "status": Statuses.Free, 
-            "licences": [Licences.CLA, Licences.FairDealing], 
+            "licences": [Licences.CLA, Licences.Section32, Licences.Section30], 
             "explanation": "under terms of CLA licence or \"fair dealing\" exception" 
         },
         { 
@@ -198,23 +248,23 @@ export class AppComponent implements OnInit, OnDestroy {
             "reproduction": Reproductions.Quotation, 
             "use": Uses.VLE, 
             "status": Statuses.Free, 
-            "licences": [Licences.CLA, Licences.FairDealing], 
+            "licences": [Licences.CLA, Licences.Section32, Licences.Section30], 
             "explanation": "under terms of CLA licence or \"fair dealing\" exception" 
         },
-        { 
+        /*{ 
             "type": Materials.Text, 
             "reproduction": Reproductions.Quotation, 
             "use": Uses.Email, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.FairDealing], 
             "explanation": "under terms of CLA licence or \"fair dealing\" exception" 
-        },
+        },*/
         { 
             "type": Materials.Text, 
             "reproduction": Reproductions.Quotation, 
             "use": Uses.Website, 
             "status": Statuses.May, 
-            "licences": [Licences.FairDealing], 
+            "licences": [Licences.Section32, Licences.Section30], 
             "explanation": "under \"fair dealing\" exception - talk to your librarian" 
         },
         { 
@@ -222,16 +272,16 @@ export class AppComponent implements OnInit, OnDestroy {
             "reproduction": Reproductions.Quotation, 
             "use": Uses.Share, 
             "status": Statuses.May, 
-            "licences": [Licences.FairDealing], 
+            "licences": [Licences.Section32, Licences.Section30], 
             "explanation": "under \"fair dealing\" exception - talk to your librarian" 
         },
-
+        //TEXT - Extract
         { 
             "type": Materials.Text, 
             "reproduction": Reproductions.TextExtract, 
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
-            "licences": [Licences.CLA, Licences.FairDealing], 
+            "licences": [Licences.CLA, Licences.Section32], 
             "explanation": "under terms of CLA licence or \"fair dealing\" exception" 
         },
         { 
@@ -239,7 +289,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "reproduction": Reproductions.TextExtract, 
             "use": Uses.Recording, 
             "status": Statuses.Free, 
-            "licences": [Licences.CLA, Licences.FairDealing], 
+            "licences": [Licences.CLA, Licences.Section32], 
             "explanation": "under terms of CLA licence or \"fair dealing\" exception" 
         },
         { 
@@ -247,7 +297,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "reproduction": Reproductions.TextExtract, 
             "use": Uses.Handout, 
             "status": Statuses.Free, 
-            "licences": [Licences.CLA, Licences.FairDealing], 
+            "licences": [Licences.CLA, Licences.Section32], 
             "explanation": "under terms of CLA licence or \"fair dealing\" exception" 
         },
         { 
@@ -258,20 +308,20 @@ export class AppComponent implements OnInit, OnDestroy {
             "licences": [Licences.CLA], 
             "explanation": "under terms of CLA licence - report to CLA coordinator" 
         },
-        { 
+        /*{ 
             "type": Materials.Text, 
             "reproduction": Reproductions.TextExtract, 
             "use": Uses.Email, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.FairDealing], 
             "explanation": "under terms of CLA licence or \"fair dealing\" exception" 
-        },
+        },*/
         { 
             "type": Materials.Text, 
             "reproduction": Reproductions.TextExtract, 
             "use": Uses.Website, 
             "status": Statuses.May, 
-            "licences": [Licences.FairDealing],
+            "licences": [Licences.Section32],
             "explanation": "under \"fair dealing\" exception - talk to your librarian" 
         },
         { 
@@ -279,16 +329,16 @@ export class AppComponent implements OnInit, OnDestroy {
             "reproduction": Reproductions.TextExtract, 
             "use": Uses.Share, 
             "status": Statuses.May, 
-            "licences": [Licences.FairDealing],
+            "licences": [Licences.Section32],
             "explanation": "under \"fair dealing\" exception - talk to your librarian" 
         },
-
+        //TEXT - Score extract
         { 
             "type": Materials.Text, 
             "reproduction": Reproductions.ScoreExtract, 
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
-            "licences": [Licences.FairDealing],
+            "licences": [Licences.Section32],
             "explanation": "under \"fair dealing\" exception" 
         },
         { 
@@ -296,7 +346,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "reproduction": Reproductions.ScoreExtract, 
             "use": Uses.Recording, 
             "status": Statuses.Free, 
-            "licences": [Licences.FairDealing],
+            "licences": [Licences.Section32],
             "explanation": "under \"fair dealing\" exception" 
         },
         { 
@@ -304,7 +354,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "reproduction": Reproductions.ScoreExtract, 
             "use": Uses.Handout, 
             "status": Statuses.Free, 
-            "licences": [Licences.FairDealing],
+            "licences": [Licences.Section32],
             "explanation": "under \"fair dealing\" exception" 
         },
         { 
@@ -312,17 +362,17 @@ export class AppComponent implements OnInit, OnDestroy {
             "reproduction": Reproductions.ScoreExtract, 
             "use": Uses.VLE, 
             "status": Statuses.Free, 
-            "licences": [Licences.FairDealing],
+            "licences": [Licences.Section32],
             "explanation": "under \"fair dealing\" exception"
         },
-        { 
+        /*{ 
             "type": Materials.Text, 
             "reproduction": Reproductions.ScoreExtract, 
             "use": Uses.Email, 
             "status": Statuses.Free, 
             "licences": [Licences.FairDealing],
             "explanation": "under \"fair dealing\" exception" 
-        },
+        },*/
         { 
             "type": Materials.Text, 
             "reproduction": Reproductions.ScoreExtract, 
@@ -339,28 +389,29 @@ export class AppComponent implements OnInit, OnDestroy {
             "licences": [Licences.Unlicensed],
             "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons." 
         },
-
+        //TEXT - ChapterPrinted
         { 
             "type": Materials.Text, 
             "reproduction": Reproductions.ChapterPrinted, 
             "use": Uses.Presentation, 
-            "status": Statuses.NA,
-            "licences": [Licences.FairDealing],
-            "explanation": "under \"fair dealing\" exception" 
+            "status": Statuses.NA, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "Not applicable" 
         },
         { 
             "type": Materials.Text, 
             "reproduction": Reproductions.ChapterPrinted, 
             "use": Uses.Recording,
-            "status": Statuses.NA,
-            "licences": [Licences.FairDealing],
-            "explanation": "under \"fair dealing\" exception" },
+            "status": Statuses.NA, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "Not applicable"
+        },
         { 
             "type": Materials.Text, 
             "reproduction": Reproductions.ChapterPrinted, 
             "use": Uses.Handout, 
             "status": Statuses.Free,
-            "licences": [Licences.CLA, Licences.FairDealing], 
+            "licences": [Licences.CLA, Licences.Section32], 
             "explanation": "under terms of CLA licence or \"fair dealing\" exception" 
         },
         { 
@@ -371,14 +422,14 @@ export class AppComponent implements OnInit, OnDestroy {
             "licences": [Licences.CLA], 
             "explanation": "under terms of CLA licence - report to CLA coordinator"
         },
-        { 
+        /*{ 
             "type": Materials.Text, 
             "reproduction": Reproductions.ChapterPrinted, 
             "use": Uses.Email, 
             "status": Statuses.Free,
             "licences": [Licences.Research], 
             "explanation": "You may send a single copy to yourself, a student or a fellow researcher under the \"research and private study\" exception" 
-        },
+        },*/
         { 
             "type": Materials.Text, 
             "reproduction": Reproductions.ChapterPrinted, 
@@ -395,6 +446,861 @@ export class AppComponent implements OnInit, OnDestroy {
             "licences": [Licences.Unlicensed], 
             "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons." 
         },
+        //TEXT - ArticlePrinted
+        { 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.ArticlePrinted, 
+            "use": Uses.Presentation, 
+            "status": Statuses.NA, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "Not applicable"
+        },
+        { 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.ArticlePrinted, 
+            "use": Uses.Recording,
+            "status": Statuses.NA, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "Not applicable"
+        },
+        { 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.ArticlePrinted, 
+            "use": Uses.Handout, 
+            "status": Statuses.FreeCLA,
+            "licences": [Licences.CLA], 
+            "explanation": "under terms of CLA licence - report to CLA coordinator" 
+        },
+        { 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.ArticlePrinted, 
+            "use": Uses.VLE, 
+            "status": Statuses.FreeCLA, 
+            "licences": [Licences.CLA], 
+            "explanation": "under terms of CLA licence - report to CLA coordinator"
+        },
+        /*{ 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.ArticlePrinted, 
+            "use": Uses.Email, 
+            "status": Statuses.Free,
+            "licences": [Licences.Research], 
+            "explanation": "You may send a single copy to yourself, a student or a fellow researcher under the \"research and private study\" exception" 
+        },*/
+        { 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.ArticlePrinted, 
+            "use": Uses.Website, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons." 
+        },
+        { 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.ArticlePrinted, 
+            "use": Uses.Share, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons." 
+        },
+        //TEXT - ChaptereBook
+        { 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.ChaptereBook, 
+            "use": Uses.Presentation, 
+            "status": Statuses.NA, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "Not applicable" 
+        },
+        { 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.ChaptereBook, 
+            "use": Uses.Recording,
+            "status": Statuses.NA, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "Not applicable"
+        },
+        { 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.ChaptereBook, 
+            "use": Uses.Handout, 
+            "status": Statuses.Free,
+            "licences": [Licences.CLA, Licences.Section32], 
+            "explanation": "under terms of CLA licence or \"fair dealing\" exception" 
+        },
+        { 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.ChaptereBook, 
+            "use": Uses.VLE, 
+            "status": Statuses.FreeCLA, 
+            "licences": [Licences.CLA], 
+            "explanation": "under terms of CLA licence - report to CLA coordinator"
+        },
+        /*{ 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.ChaptereBook, 
+            "use": Uses.Email, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
+        },*/
+        { 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.ChaptereBook, 
+            "use": Uses.Website, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
+        },
+        { 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.ChaptereBook, 
+            "use": Uses.Share, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
+        },
+        //TEXT - ArticleeJournal
+        { 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.ArticleeJournal, 
+            "use": Uses.Presentation, 
+            "status": Statuses.NA, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "Not applicable" 
+        },
+        { 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.ArticleeJournal, 
+            "use": Uses.Recording,
+            "status": Statuses.NA, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "Not applicable"
+        },
+        { 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.ArticleeJournal, 
+            "use": Uses.Handout, 
+            "status": Statuses.FreeCLA,
+            "licences": [Licences.CLA], 
+            "explanation": "under terms of CLA licence - report to CLA coordinator" 
+        },
+        { 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.ArticleeJournal, 
+            "use": Uses.VLE, 
+            "status": Statuses.FreeCLA, 
+            "licences": [Licences.CLA], 
+            "explanation": "under terms of CLA licence - report to CLA coordinator"
+        },
+        /*{ 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.ArticleeJournal, 
+            "use": Uses.Email, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
+        },*/
+        { 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.ArticleeJournal, 
+            "use": Uses.Website, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
+        },
+        { 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.ArticleeJournal, 
+            "use": Uses.Share, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
+        },
+        //TEXT - Book
+        { 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.Book, 
+            "use": Uses.Presentation, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
+        },
+        { 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.Book, 
+            "use": Uses.Recording,
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
+        },
+        { 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.Book, 
+            "use": Uses.Handout, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
+        },
+        { 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.Book, 
+            "use": Uses.VLE, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
+        },
+        /*{ 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.Book, 
+            "use": Uses.Email, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
+        },*/
+        { 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.Book, 
+            "use": Uses.Website, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
+        },
+        { 
+            "type": Materials.Text, 
+            "reproduction": Reproductions.Book, 
+            "use": Uses.Share, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
+        },
+        //Image - Internet
+        { 
+            "type": Materials.Image, 
+            "reproduction": Reproductions.ImageInternet, 
+            "use": Uses.Presentation, 
+            "status": Statuses.Free, 
+            "licences": [Licences.Section32],
+            "explanation": "under \"fair dealing\" exception"
+        },
+        { 
+            "type": Materials.Image, 
+            "reproduction": Reproductions.ImageInternet, 
+            "use": Uses.Recording,
+            "status": Statuses.May, 
+            "licences": [Licences.Section32, Licences.CLA], 
+            "explanation": "under \"fair dealing\" exception or under terms of CLA licence - talk to your librarian" 
+        },
+        { 
+            "type": Materials.Image, 
+            "reproduction": Reproductions.ImageInternet, 
+            "use": Uses.Handout, 
+            "status": Statuses.May, 
+            "licences": [Licences.Section32, Licences.CLA], 
+            "explanation": "under \"fair dealing\" exception or under terms of CLA licence - talk to your librarian" 
+        },
+        { 
+            "type": Materials.Image, 
+            "reproduction": Reproductions.ImageInternet, 
+            "use": Uses.VLE, 
+            "status": Statuses.May, 
+            "licences": [Licences.Section32, Licences.CLA], 
+            "explanation": "under \"fair dealing\" exception or under terms of CLA licence - talk to your librarian" 
+        },
+        /*{ 
+            "type": Materials.Image, 
+            "reproduction": Reproductions.ImageInternet, 
+            "use": Uses.Email, 
+            "status": Statuses.Free,
+            "licences": [Licences.Research], 
+            "explanation": "You may send a single copy to yourself, a student or a fellow researcher under the \"research and private study\" exception" 
+        },*/
+        { 
+            "type": Materials.Image, 
+            "reproduction": Reproductions.ImageInternet, 
+            "use": Uses.Website, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to the image (unless this is specifically forbidden by the terms and conditions of the source website)" 
+        },
+        { 
+            "type": Materials.Image, 
+            "reproduction": Reproductions.ImageInternet, 
+            "use": Uses.Share, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to the image (unless this is specifically forbidden by the terms and conditions of the source website)" 
+        },
+        //Image - ImageJournalBook
+        { 
+            "type": Materials.Image, 
+            "reproduction": Reproductions.ImageJournalBook, 
+            "use": Uses.Presentation, 
+            "status": Statuses.Free, 
+            "licences": [Licences.CLA, Licences.Section32], 
+            "explanation": "under terms of CLA licence or \"fair dealing\" exception"
+        },
+        { 
+            "type": Materials.Image, 
+            "reproduction": Reproductions.ImageJournalBook, 
+            "use": Uses.Recording,
+            "status": Statuses.Free, 
+            "licences": [Licences.CLA, Licences.Section32], 
+            "explanation": "under terms of CLA licence or \"fair dealing\" exception"
+        },
+        { 
+            "type": Materials.Image, 
+            "reproduction": Reproductions.ImageJournalBook, 
+            "use": Uses.Handout, 
+            "status": Statuses.May, 
+            "licences": [Licences.Section32],
+            "explanation": "under \"fair dealing\" exception - talk to your librarian" 
+        },
+        { 
+            "type": Materials.Image, 
+            "reproduction": Reproductions.ImageJournalBook, 
+            "use": Uses.VLE, 
+            "status": Statuses.Free, 
+            "licences": [Licences.CLA, Licences.Section32], 
+            "explanation": "under terms of CLA licence or \"fair dealing\" exception"
+        },
+        /*{ 
+            "type": Materials.Image, 
+            "reproduction": Reproductions.ImageJournalBook, 
+            "use": Uses.Email, 
+            "status": Statuses.Free, 
+            "licences": [Licences.CLA, Licences.FairDealing], 
+            "explanation": "under terms of CLA licence or \"fair dealing\" exception" 
+        },*/
+        { 
+            "type": Materials.Image, 
+            "reproduction": Reproductions.ImageJournalBook, 
+            "use": Uses.Website, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to the image (unless this is specifically forbidden by the terms and conditions of the source website)" 
+        },
+        { 
+            "type": Materials.Image, 
+            "reproduction": Reproductions.ImageJournalBook, 
+            "use": Uses.Share, 
+            "status": Statuses.May, 
+            "licences": [Licences.Section32, Licences.CLA], 
+            "explanation": "under \"fair dealing\" exception or under terms of CLA licence - talk to your librarian"
+        },
+        //Broadcast - Box of Broadcasts
+        { 
+            "type": Materials.Broadcast, 
+            "reproduction": Reproductions.BroadcastBoxOf, 
+            "use": Uses.Presentation, 
+            "status": Statuses.Free, 
+            "licences": [Licences.ERA], 
+            "explanation": "under terms of ERA licence"
+        },
+        { 
+            "type": Materials.Broadcast, 
+            "reproduction": Reproductions.BroadcastBoxOf, 
+            "use": Uses.Recording,
+            "status": Statuses.Free, 
+            "licences": [Licences.ERA], 
+            "explanation": "under terms of ERA licence"
+        },
+        { 
+            "type": Materials.Broadcast, 
+            "reproduction": Reproductions.BroadcastBoxOf, 
+            "use": Uses.Handout, 
+            "status": Statuses.NA, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "Not applicable"
+        },
+        { 
+            "type": Materials.Broadcast, 
+            "reproduction": Reproductions.BroadcastBoxOf, 
+            "use": Uses.VLE, 
+            "status": Statuses.Free, 
+            "licences": [Licences.ERA], 
+            "explanation": "under terms of ERA licence"
+        },
+        /*{ 
+            "type": Materials.Broadcast, 
+            "reproduction": Reproductions.BroadcastBoxOf, 
+            "use": Uses.Email, 
+            "status": Statuses.NA, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "Not applicable"
+        },*/
+        { 
+            "type": Materials.Broadcast, 
+            "reproduction": Reproductions.BroadcastBoxOf, 
+            "use": Uses.Website, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can of course share a link to the programme which would only be accessible to those with access to Box of Broadcasts" 
+        },
+        { 
+            "type": Materials.Broadcast, 
+            "reproduction": Reproductions.BroadcastBoxOf, 
+            "use": Uses.Share, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can of course share a link to the programme which would only be accessible to those with access to Box of Broadcasts" 
+        },
+        //Broadcast - BroadcastExtract
+        { 
+            "type": Materials.Broadcast, 
+            "reproduction": Reproductions.BroadcastExtract, 
+            "use": Uses.Presentation, 
+            "status": Statuses.Free, 
+            "licences": [Licences.ERA, Licences.Section32], 
+            "explanation": "under terms of ERA licence or \"fair dealing\" exception"
+        },
+        { 
+            "type": Materials.Broadcast, 
+            "reproduction": Reproductions.BroadcastExtract, 
+            "use": Uses.Recording,
+            "status": Statuses.Free, 
+            "licences": [Licences.ERA, Licences.Section32], 
+            "explanation": "under terms of ERA licence or \"fair dealing\" exception"
+        },
+        { 
+            "type": Materials.Broadcast, 
+            "reproduction": Reproductions.BroadcastExtract, 
+            "use": Uses.Handout, 
+            "status": Statuses.NA, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "Not applicable"
+        },
+        { 
+            "type": Materials.Broadcast, 
+            "reproduction": Reproductions.BroadcastExtract, 
+            "use": Uses.VLE, 
+            "status": Statuses.Free, 
+            "licences": [Licences.ERA, Licences.Section32], 
+            "explanation": "under terms of ERA licence or \"fair dealing\" exception"
+        },
+        /*{ 
+            "type": Materials.Broadcast, 
+            "reproduction": Reproductions.BroadcastExtract, 
+            "use": Uses.Email, 
+            "status": Statuses.NA, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "Not applicable"
+        },*/
+        { 
+            "type": Materials.Broadcast, 
+            "reproduction": Reproductions.BroadcastExtract, 
+            "use": Uses.Website, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can of course share a link to the programme which would only be accessible to those with access to Box of Broadcasts" 
+        },
+        { 
+            "type": Materials.Broadcast, 
+            "reproduction": Reproductions.BroadcastExtract, 
+            "use": Uses.Share, 
+            "status": Statuses.May, 
+            "licences": [Licences.Section32, Licences.ERA], 
+            "explanation": "under \"fair dealing\" exception or under terms of ERA licence - talk to your librarian"
+        },
+        //Broadcast - Broadcast
+        { 
+            "type": Materials.Broadcast, 
+            "reproduction": Reproductions.Broadcast, 
+            "use": Uses.Presentation, 
+            "status": Statuses.May, 
+            "licences": [Licences.ERA], 
+            "explanation": "under terms of ERA licence - talk to your librarian"
+        },
+        { 
+            "type": Materials.Broadcast, 
+            "reproduction": Reproductions.Broadcast, 
+            "use": Uses.Recording,
+            "status": Statuses.May, 
+            "licences": [Licences.ERA], 
+            "explanation": "under terms of ERA licence - talk to your librarian"
+        },
+        { 
+            "type": Materials.Broadcast, 
+            "reproduction": Reproductions.Broadcast, 
+            "use": Uses.Handout, 
+            "status": Statuses.NA, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "Not applicable"
+        },
+        { 
+            "type": Materials.Broadcast, 
+            "reproduction": Reproductions.Broadcast, 
+            "use": Uses.VLE, 
+            "status": Statuses.May, 
+            "licences": [Licences.ERA], 
+            "explanation": "under terms of ERA licence - talk to your librarian"
+        },
+        /*{ 
+            "type": Materials.Broadcast, 
+            "reproduction": Reproductions.Broadcast, 
+            "use": Uses.Email, 
+            "status": Statuses.NA, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "Not applicable"
+        },*/
+        { 
+            "type": Materials.Broadcast, 
+            "reproduction": Reproductions.Broadcast, 
+            "use": Uses.Website, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can of course share a link to the programme" 
+        },
+        { 
+            "type": Materials.Broadcast, 
+            "reproduction": Reproductions.Broadcast, 
+            "use": Uses.Share, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can of course share a link to the programme" 
+        },
+        //Film - Youtube official
+        { 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.FilmYouTubeOfficial, 
+            "use": Uses.Presentation, 
+            "status": Statuses.Free, 
+            "licences": [Licences.YouTube], 
+            "explanation": "under TouTube terms and conditions"
+        },
+        { 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.FilmYouTubeOfficial, 
+            "use": Uses.Recording,
+            "status": Statuses.Free, 
+            "licences": [Licences.YouTube], 
+            "explanation": "under TouTube terms and conditions"
+        },
+        { 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.FilmYouTubeOfficial, 
+            "use": Uses.Handout, 
+            "status": Statuses.Free, 
+            "licences": [Licences.YouTube], 
+            "explanation": "under TouTube terms and conditions"
+        },
+        { 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.FilmYouTubeOfficial, 
+            "use": Uses.VLE, 
+            "status": Statuses.Free, 
+            "licences": [Licences.YouTube], 
+            "explanation": "under TouTube terms and conditions"
+        },
+        /*{ 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.FilmYouTubeOfficial, 
+            "use": Uses.Email, 
+            "status": Statuses.Free, 
+            "licences": [Licences.YouTube], 
+            "explanation": "under TouTube terms and conditions"
+        },*/
+        { 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.FilmYouTubeOfficial, 
+            "use": Uses.Website, 
+            "status": Statuses.Free, 
+            "licences": [Licences.YouTube], 
+            "explanation": "under TouTube terms and conditions"
+        },
+        { 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.FilmYouTubeOfficial, 
+            "use": Uses.Share, 
+            "status": Statuses.Free, 
+            "licences": [Licences.YouTube], 
+            "explanation": "under TouTube terms and conditions"
+        },
+        //Film - Youtube untrusted
+        { 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.FilmYouTubeUnofficial, 
+            "use": Uses.Presentation, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "low risk but not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+        },
+        { 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.FilmYouTubeUnofficial, 
+            "use": Uses.Recording,
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. EVEN LINKING could constitute secondary infringement with both you and primary infringer liable"
+        },
+        { 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.FilmYouTubeUnofficial, 
+            "use": Uses.Handout, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. EVEN LINKING could constitute secondary infringement with both you and primary infringer liable"
+        },
+        { 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.FilmYouTubeUnofficial, 
+            "use": Uses.VLE, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. EVEN LINKING could constitute secondary infringement with both you and primary infringer liable"
+        },
+        /*{ 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.FilmYouTubeUnofficial, 
+            "use": Uses.Email, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "low risk but not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+        },*/
+        { 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.FilmYouTubeUnofficial, 
+            "use": Uses.Website, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. EVEN LINKING could constitute secondary infringement with both you and primary infringer liable"
+        },
+        { 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.FilmYouTubeUnofficial, 
+            "use": Uses.Share, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. EVEN LINKING could constitute secondary infringement with both you and primary infringer liable"
+        },
+        //Film - FilmExtract
+        { 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.FilmExtract, 
+            "use": Uses.Presentation, 
+            "status": Statuses.Free, 
+            "licences": [Licences.Section32],
+            "explanation": "under \"fair dealing\" exception"
+        },
+        { 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.FilmExtract, 
+            "use": Uses.Recording,
+            "status": Statuses.May, 
+            "licences": [Licences.Section32], 
+            "explanation": "under \"fair dealing\" exception - talk to your librarian"
+        },
+        { 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.FilmExtract, 
+            "use": Uses.Handout, 
+            "status": Statuses.NA, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "Not applicable"
+        },
+        { 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.FilmExtract, 
+            "use": Uses.VLE, 
+            "status": Statuses.May, 
+            "licences": [Licences.Section32], 
+            "explanation": "under \"fair dealing\" exception - talk to your librarian"
+        },
+        /*{ 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.FilmExtract, 
+            "use": Uses.Email, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "low risk but not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+        },*/
+        { 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.FilmExtract, 
+            "use": Uses.Website, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+        },
+        { 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.FilmExtract, 
+            "use": Uses.Share, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+        },
+        //Film - Entire Film
+        { 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.Film, 
+            "use": Uses.Presentation, 
+            "status": Statuses.May, 
+            "licences": [Licences.Section32], 
+            "explanation": "under \"fair dealing\" exception - talk to your librarian"
+        },
+        { 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.Film, 
+            "use": Uses.Recording,
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+        },
+        { 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.Film, 
+            "use": Uses.Handout, 
+            "status": Statuses.NA, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "Not applicable"
+        },
+        { 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.Film, 
+            "use": Uses.VLE, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+        },
+        /*{ 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.Film, 
+            "use": Uses.Email, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+        },*/
+        { 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.Film, 
+            "use": Uses.Website, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+        },
+        { 
+            "type": Materials.Video, 
+            "reproduction": Reproductions.Film, 
+            "use": Uses.Share, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+        },
+        //Audio - Music extract
+        { 
+            "type": Materials.Audio, 
+            "reproduction": Reproductions.MusicExtract, 
+            "use": Uses.Presentation, 
+            "status": Statuses.May, 
+            "licences": [Licences.Section32], 
+            "explanation": "under \"fair dealing\" exception - talk to your librarian"
+        },
+        { 
+            "type": Materials.Audio, 
+            "reproduction": Reproductions.MusicExtract, 
+            "use": Uses.Recording,
+            "status": Statuses.May, 
+            "licences": [Licences.Section32], 
+            "explanation": "under \"fair dealing\" exception - talk to your librarian"
+        },
+        { 
+            "type": Materials.Audio, 
+            "reproduction": Reproductions.MusicExtract, 
+            "use": Uses.Handout, 
+            "status": Statuses.NA, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "Not applicable"
+        },
+        { 
+            "type": Materials.Audio, 
+            "reproduction": Reproductions.MusicExtract, 
+            "use": Uses.VLE, 
+            "status": Statuses.May, 
+            "licences": [Licences.Section32], 
+            "explanation": "under \"fair dealing\" exception - talk to your librarian"
+        },
+        /*{ 
+            "type": Materials.Audio, 
+            "reproduction": Reproductions.MusicExtract, 
+            "use": Uses.Email, 
+            "status": Statuses.Free,
+            "licences": [Licences.Research], 
+            "explanation": "You may send a single copy to yourself, a student or a fellow researcher under the \"research and private study\" exception"
+        },*/
+        { 
+            "type": Materials.Audio, 
+            "reproduction": Reproductions.MusicExtract, 
+            "use": Uses.Website, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+        },
+        { 
+            "type": Materials.Audio, 
+            "reproduction": Reproductions.MusicExtract, 
+            "use": Uses.Share, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+        },
+        //Audio - Sound recording
+        { 
+            "type": Materials.Audio, 
+            "reproduction": Reproductions.SoundRecording, 
+            "use": Uses.Presentation, 
+            "status": Statuses.May, 
+            "licences": [Licences.Section32], 
+            "explanation": "under \"fair dealing\" exception - talk to your librarian"
+        },
+        { 
+            "type": Materials.Audio, 
+            "reproduction": Reproductions.SoundRecording, 
+            "use": Uses.Recording,
+            "status": Statuses.May, 
+            "licences": [Licences.Section32], 
+            "explanation": "under \"fair dealing\" exception - talk to your librarian"
+        },
+        { 
+            "type": Materials.Audio, 
+            "reproduction": Reproductions.SoundRecording, 
+            "use": Uses.Handout, 
+            "status": Statuses.NA, 
+            "licences": [Licences.Unlicensed], 
+            "explanation": "Not applicable"
+        },
+        { 
+            "type": Materials.Audio, 
+            "reproduction": Reproductions.SoundRecording, 
+            "use": Uses.VLE, 
+            "status": Statuses.May, 
+            "licences": [Licences.Section32], 
+            "explanation": "under \"fair dealing\" exception - talk to your librarian"
+        },
+        /*{ 
+            "type": Materials.Audio, 
+            "reproduction": Reproductions.SoundRecording, 
+            "use": Uses.Email, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+        },*/
+        { 
+            "type": Materials.Audio, 
+            "reproduction": Reproductions.SoundRecording, 
+            "use": Uses.Website, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+        },
+        { 
+            "type": Materials.Audio, 
+            "reproduction": Reproductions.SoundRecording, 
+            "use": Uses.Share, 
+            "status": Statuses.Forbidden, 
+            "licences": [Licences.Unlicensed],
+            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+        }
     ];
     
     /** END EDITABLE MATERIAL **/
@@ -407,6 +1313,38 @@ export class AppComponent implements OnInit, OnDestroy {
     }
     
     ngOnInit() {
+        
+        this.materialChildren[Materials.Text] = [
+            Reproductions.Quotation, 
+            Reproductions.TextExtract, 
+            Reproductions.ScoreExtract, 
+            Reproductions.ChapterPrinted, 
+            Reproductions.ArticlePrinted, 
+            Reproductions.ChaptereBook, 
+            Reproductions.ArticleeJournal,
+            Reproductions.Book
+        ];
+        this.materialChildren[Materials.Video] = [
+            Reproductions.FilmYouTubeUnofficial, 
+            Reproductions.FilmYouTubeOfficial,
+            Reproductions.FilmExtract,
+            Reproductions.Film
+        ];
+        this.materialChildren[Materials.Audio] = [
+            Reproductions.MusicExtract, 
+            Reproductions.SoundRecording   
+        ];
+        this.materialChildren[Materials.Image] = [
+            Reproductions.ImageInternet, 
+            Reproductions.ImageJournalBook
+        ];
+        this.materialChildren[Materials.Broadcast] = [
+            Reproductions.BroadcastBoxOf, 
+            Reproductions.BroadcastExtract, 
+            Reproductions.Broadcast   
+        ];
+        console.log(this.materialChildren);
+        
         //build structures for: Type of item; Use of item
         for (let item of this.items) {
             /* BEGIN data structures by material being reproduced */
@@ -487,6 +1425,10 @@ export class AppComponent implements OnInit, OnDestroy {
         for (let material in this.materialsType.keys()) {
             this.filters['materials'][this.materialsType[material]] = true;
         }
+        this.filters['materialsIndeterminacy'] = []; //note this is only here to control indeterminate state of material chcekbox in side panel
+        for (let material in this.materialsType.keys()) {
+            this.filters['materialsIndeterminacy'][this.materialsType[material]] = false;
+        }
         this.filters['licences'] = [];
         for (let licence in this.licencesType.keys()) {
             this.filters['licences'][this.licencesType[licence]] = true;
@@ -506,7 +1448,56 @@ export class AppComponent implements OnInit, OnDestroy {
         }*/
     }
     
-    onFilterChange () {
+    onFilterChange (event, target) {
+        console.log(event);
+        console.log(target);
+        //first of all, check whether the chcekbox clicked is one of the materials that has children
+        if(target.includes('material_')) {
+            //it's one of the parent material checkboxes
+            //find out which one
+            let idParts = target.split('_');
+            let parentMaterial = idParts[1];
+            let parentMaterialEnum = Materials[parentMaterial];
+            //and react to its state
+            //let's check all of its children
+            for (let reproduction of this.materialChildren[parentMaterialEnum]) {
+                this.filters['reproductions'][this.reproductionsType[reproduction]] = event.checked;       
+            } 
+        }
+        //if it's a child of a material, update the state of the parent material checkbox
+        if(target.includes('material_')) {
+            //it's one of the parent material checkboxes
+            //find out which one
+            let idParts = target.split('_');
+            let parentMaterial = idParts[1];
+            let parentMaterialEnum = Materials[parentMaterial];
+            //and react to its state
+            //let's check all of its children
+            for (let reproduction of this.materialChildren[parentMaterialEnum]) {
+                this.filters['reproductions'][this.reproductionsType[reproduction]] = event.checked;       
+            } 
+        } else if (target.includes('reproduction_')) {
+            //for each material check how many are checked 
+            for (let material of this.materialsType.keys()) {
+                console.log(material);
+                let countForThisMaterial = 0;
+                for (let reproduction of this.materialChildren[material]) {
+                    if (this.filters['reproductions'][this.reproductionsType[reproduction]] === true){
+                        countForThisMaterial += 1;
+                    }
+                }
+                if(countForThisMaterial===0) {
+                    this.filters['materials'][this.materialsType[material]] = false;
+                    this.filters['materialsIndeterminacy'][this.materialsType[material]] = false;
+                } else if (countForThisMaterial === this.materialChildren[material].length) {
+                    this.filters['materials'][this.materialsType[material]] = true; 
+                    this.filters['materialsIndeterminacy'][this.materialsType[material]] = false; 
+                } else {
+                    this.filters['materialsIndeterminacy'][this.materialsType[material]] = true; 
+                }
+            }
+        }
+                
         this.filteredItemReproductions = []
         //basically run though and only transfer to this.filteredItemReproductions and this.filteredItemUses those items which match filters
         for (let itemReproduction of this.itemReproductions) {
@@ -568,7 +1559,7 @@ export class AppComponent implements OnInit, OnDestroy {
             }
         }
         this.filteredItemUses = []
-        console.log(this.itemUses);
+        //console.log(this.itemUses);
         for (let itemUse of this.itemUses) {
             let newItemUse = {use: null, materialReproductions: []};
             let add = true;  //add unless one of below is false
@@ -624,7 +1615,7 @@ export class AppComponent implements OnInit, OnDestroy {
             }
         }
         //console.log(this.itemReproductions);
-        console.log(this.filteredItemUses);
+        //console.log(this.filteredItemUses);
     }
     
     ngOnDestroy(): void {
