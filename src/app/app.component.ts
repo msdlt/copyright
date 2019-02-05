@@ -66,8 +66,8 @@ import {
         ERA, //ERA licence
         YouTube, //Youtube T&C
         Section30, //Quotation (criticism and review)
-        Section31A31B, //Accessible copies for disabled users
-        Section32, //Instruction for illustration exception subject to \"fair dealing\"
+        //Section31A31B, //Accessible copies for disabled users
+        Section32, //Illustration for Instruction exception subject to \"fair dealing\"
         Section34, //Performing or playing a work for educational purposes
         //Research, //\"research and private study\" exception
         Unlicensed
@@ -152,6 +152,7 @@ export class AppComponent implements OnInit, OnDestroy {
     licencesType = Licences;
     reproductionsType = Reproductions;
     filters = [];
+    allNoneCheckBoxes = [];
     
     private _mobileQueryListener: () => void;
     
@@ -180,7 +181,7 @@ export class AppComponent implements OnInit, OnDestroy {
         "Handout": "Distribute as a handout", 
         "VLE": "Embed in VLE materials", 
         //"Email": "Share by email", 
-        "Website": "Public website or Open Educational Resource (OER)", 
+        "Website": "Public website or resource (OER)", 
         "Share": "Share via social media/cloud service"
     }
     
@@ -207,11 +208,22 @@ export class AppComponent implements OnInit, OnDestroy {
     };
     
     statusDescriptions = {
-        "Free": "Free to use",
-        "FreeCLA": "Free to use IF CLA licensed",
-        "May": "You MAY be able to use",
+        "Free": "OK, subject to \"fair dealing\"",
+        "FreeCLA": "OK, if CLA licensed",
+        "May": "Check with librarian",
         "Forbidden": "Not permitted",
         "NA": "Not appropriate"
+    };
+    
+    licenceDescriptions = {
+        "CLA": "CLA licence",
+        "ERA": "ERA licence",
+        "YouTube": "Youtube T&C",
+        "Section30": "Section 30: Quotation (criticism and review)",
+        //"Section31A31B": "Section 31A & 31B: Accessible copies for disabled users",
+        "Section32": "Section 32: Illustration for Instruction exception subject to \"fair dealing\"",
+        "Section34": "Section 34: Performing or playing a work for educational purposes",
+        "Unlicensed": "Unlicensed: Not covered by any licences, agreements or exceptions"
     };
     
     //setup which reproductions belong to which material
@@ -224,8 +236,8 @@ export class AppComponent implements OnInit, OnDestroy {
             "reproduction": Reproductions.Quotation, 
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
-            "licences": [Licences.CLA, Licences.Section32, Licences.Section30, Licences.Section30], 
-            "explanation": "under terms of CLA licence or \"fair dealing\" exception" 
+            "licences": [Licences.CLA, Licences.Section32, Licences.Section30], 
+            "explanation": "under terms of CLA licence; or Quotation (criticism and review) or Illustration for Instruction exceptions, subject to \"fair dealing\"" 
         },
         { 
             "type": Materials.Text, 
@@ -233,7 +245,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Recording, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32, Licences.Section30], 
-            "explanation": "under terms of CLA licence or \"fair dealing\" exception" 
+            "explanation": "under terms of CLA licence; or Quotation (criticism and review) or Illustration for Instruction exceptions, subject to \"fair dealing\"" 
         },
         { 
             "type": Materials.Text, 
@@ -241,7 +253,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32, Licences.Section30], 
-            "explanation": "under terms of CLA licence or \"fair dealing\" exception" 
+            "explanation": "under terms of CLA licence; or Quotation (criticism and review) or Illustration for Instruction exceptions, subject to \"fair dealing\"" 
         },
         { 
             "type": Materials.Text, 
@@ -249,7 +261,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32, Licences.Section30], 
-            "explanation": "under terms of CLA licence or \"fair dealing\" exception" 
+            "explanation": "under terms of CLA licence; or Quotation (criticism and review) or Illustration for Instruction exceptions, subject to \"fair dealing\"" 
         },
         /*{ 
             "type": Materials.Text, 
@@ -265,7 +277,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.Section30], 
-            "explanation": "under \"fair dealing\" exception - talk to your librarian" 
+            "explanation": "under Quotation (criticism and review) or Illustration for Instruction exceptions, subject to \"fair dealing\" - talk to your librarian" 
         },
         { 
             "type": Materials.Text, 
@@ -273,7 +285,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.Section30], 
-            "explanation": "under \"fair dealing\" exception - talk to your librarian" 
+            "explanation": "under Quotation (criticism and review) or Illustration for Instruction exceptions, subject to \"fair dealing\" - talk to your librarian" 
         },
         //TEXT - Extract
         { 
@@ -282,7 +294,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of CLA licence or \"fair dealing\" exception" 
+            "explanation": "under terms of CLA licence or Illustration for Instruction exception, subject to \"fair dealing\"" 
         },
         { 
             "type": Materials.Text, 
@@ -290,7 +302,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Recording, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of CLA licence or \"fair dealing\" exception" 
+            "explanation": "under terms of CLA licence or Illustration for Instruction exception, subject to \"fair dealing\"" 
         },
         { 
             "type": Materials.Text, 
@@ -298,7 +310,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of CLA licence or \"fair dealing\" exception" 
+            "explanation": "under terms of CLA licence or Illustration for Instruction exception, subject to \"fair dealing\"" 
         },
         { 
             "type": Materials.Text, 
@@ -322,7 +334,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.May, 
             "licences": [Licences.Section32],
-            "explanation": "under \"fair dealing\" exception - talk to your librarian" 
+            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian" 
         },
         { 
             "type": Materials.Text, 
@@ -330,7 +342,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.May, 
             "licences": [Licences.Section32],
-            "explanation": "under \"fair dealing\" exception - talk to your librarian" 
+            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian" 
         },
         //TEXT - Score extract
         { 
@@ -339,7 +351,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
             "licences": [Licences.Section32],
-            "explanation": "under \"fair dealing\" exception" 
+            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\"" 
         },
         { 
             "type": Materials.Text, 
@@ -347,7 +359,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Recording, 
             "status": Statuses.Free, 
             "licences": [Licences.Section32],
-            "explanation": "under \"fair dealing\" exception" 
+            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\"" 
         },
         { 
             "type": Materials.Text, 
@@ -355,7 +367,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.Free, 
             "licences": [Licences.Section32],
-            "explanation": "under \"fair dealing\" exception" 
+            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\"" 
         },
         { 
             "type": Materials.Text, 
@@ -363,7 +375,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.Free, 
             "licences": [Licences.Section32],
-            "explanation": "under \"fair dealing\" exception"
+            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\""
         },
         /*{ 
             "type": Materials.Text, 
@@ -412,7 +424,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.Free,
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of CLA licence or \"fair dealing\" exception" 
+            "explanation": "under terms of CLA licence or Illustration for Instruction exception, subject to \"fair dealing\"" 
         },
         { 
             "type": Materials.Text, 
@@ -526,7 +538,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.Free,
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of CLA licence or \"fair dealing\" exception" 
+            "explanation": "under terms of CLA licence or Illustration for Instruction exception, subject to \"fair dealing\"" 
         },
         { 
             "type": Materials.Text, 
@@ -681,7 +693,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
             "licences": [Licences.Section32],
-            "explanation": "under \"fair dealing\" exception"
+            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\""
         },
         { 
             "type": Materials.Image, 
@@ -689,7 +701,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.CLA], 
-            "explanation": "under \"fair dealing\" exception or under terms of CLA licence - talk to your librarian" 
+            "explanation": "under terms of CLA licence or Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian" 
         },
         { 
             "type": Materials.Image, 
@@ -697,7 +709,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.CLA], 
-            "explanation": "under \"fair dealing\" exception or under terms of CLA licence - talk to your librarian" 
+            "explanation": "under terms of CLA licence or Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian" 
         },
         { 
             "type": Materials.Image, 
@@ -705,7 +717,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.CLA], 
-            "explanation": "under \"fair dealing\" exception or under terms of CLA licence - talk to your librarian" 
+            "explanation": "under terms of CLA licence or Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian" 
         },
         /*{ 
             "type": Materials.Image, 
@@ -738,7 +750,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of CLA licence or \"fair dealing\" exception"
+            "explanation": "under terms of CLA licence or Illustration for Instruction exception, subject to \"fair dealing\""
         },
         { 
             "type": Materials.Image, 
@@ -746,7 +758,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of CLA licence or \"fair dealing\" exception"
+            "explanation": "under terms of CLA licence or Illustration for Instruction exception, subject to \"fair dealing\""
         },
         { 
             "type": Materials.Image, 
@@ -754,7 +766,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.May, 
             "licences": [Licences.Section32],
-            "explanation": "under \"fair dealing\" exception - talk to your librarian" 
+            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian" 
         },
         { 
             "type": Materials.Image, 
@@ -762,7 +774,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of CLA licence or \"fair dealing\" exception"
+            "explanation": "under terms of CLA licence or Illustration for Instruction exception, subject to \"fair dealing\""
         },
         /*{ 
             "type": Materials.Image, 
@@ -786,7 +798,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.CLA], 
-            "explanation": "under \"fair dealing\" exception or under terms of CLA licence - talk to your librarian"
+            "explanation": "under terms of CLA licence or Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian"
         },
         //Broadcast - Box of Broadcasts
         { 
@@ -852,7 +864,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
             "licences": [Licences.ERA, Licences.Section32], 
-            "explanation": "under terms of ERA licence or \"fair dealing\" exception"
+            "explanation": "under terms of ERA licence or Illustration for Instruction exception, subject to \"fair dealing\""
         },
         { 
             "type": Materials.Broadcast, 
@@ -860,7 +872,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.Free, 
             "licences": [Licences.ERA, Licences.Section32], 
-            "explanation": "under terms of ERA licence or \"fair dealing\" exception"
+            "explanation": "under terms of ERA licence or Illustration for Instruction exception, subject to \"fair dealing\""
         },
         { 
             "type": Materials.Broadcast, 
@@ -876,7 +888,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.Free, 
             "licences": [Licences.ERA, Licences.Section32], 
-            "explanation": "under terms of ERA licence or \"fair dealing\" exception"
+            "explanation": "under terms of ERA licence or Illustration for Instruction exception, subject to \"fair dealing\""
         },
         /*{ 
             "type": Materials.Broadcast, 
@@ -900,7 +912,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.ERA], 
-            "explanation": "under \"fair dealing\" exception or under terms of ERA licence - talk to your librarian"
+            "explanation": "under terms of ERA licence or Illustration for Instruction exception, subject to \"fair dealing\"- talk to your librarian"
         },
         //Broadcast - Broadcast
         { 
@@ -1080,7 +1092,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
             "licences": [Licences.Section32],
-            "explanation": "under \"fair dealing\" exception"
+            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\""
         },
         { 
             "type": Materials.Video, 
@@ -1088,7 +1100,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under \"fair dealing\" exception - talk to your librarian"
+            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian"
         },
         { 
             "type": Materials.Video, 
@@ -1104,7 +1116,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under \"fair dealing\" exception - talk to your librarian"
+            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian"
         },
         /*{ 
             "type": Materials.Video, 
@@ -1194,7 +1206,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under \"fair dealing\" exception - talk to your librarian"
+            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian"
         },
         { 
             "type": Materials.Audio, 
@@ -1202,7 +1214,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under \"fair dealing\" exception - talk to your librarian"
+            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian"
         },
         { 
             "type": Materials.Audio, 
@@ -1218,7 +1230,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under \"fair dealing\" exception - talk to your librarian"
+            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian"
         },
         /*{ 
             "type": Materials.Audio, 
@@ -1251,7 +1263,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under \"fair dealing\" exception - talk to your librarian"
+            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian"
         },
         { 
             "type": Materials.Audio, 
@@ -1259,7 +1271,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under \"fair dealing\" exception - talk to your librarian"
+            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian"
         },
         { 
             "type": Materials.Audio, 
@@ -1275,7 +1287,7 @@ export class AppComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under \"fair dealing\" exception - talk to your librarian"
+            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian"
         },
         /*{ 
             "type": Materials.Audio, 
@@ -1438,6 +1450,19 @@ export class AppComponent implements OnInit, OnDestroy {
             this.filters['reproductions'][this.reproductionsType[reproduction]] = true;
         }
         
+        //now an array for the all/none chcekboxes in the sidepanel
+        this.allNoneCheckBoxes['uses'] = true;
+        this.allNoneCheckBoxes['statuses'] = true;
+        this.allNoneCheckBoxes['materials'] = true;
+        this.allNoneCheckBoxes['licences'] = true;
+        this.allNoneCheckBoxes['reproductions'] = true;
+        
+        this.allNoneCheckBoxes['usesIndeterminacy'] = false;
+        this.allNoneCheckBoxes['statusesIndeterminacy'] = false;
+        this.allNoneCheckBoxes['materialsIndeterminacy'] = false;
+        this.allNoneCheckBoxes['licencesIndeterminacy'] = false;
+        this.allNoneCheckBoxes['reproductionsIndeterminacy'] = false;
+                
         //now let's create filtered lists which we'll actually display
         this.filteredItemReproductions = this.itemReproductions;
         this.filteredItemUses = this.itemUses;
@@ -1449,10 +1474,10 @@ export class AppComponent implements OnInit, OnDestroy {
     }
     
     onFilterChange (event, target) {
-        console.log(event);
-        console.log(target);
+        //console.log(event);
+        //console.log(target);
         //first of all, check whether the chcekbox clicked is one of the materials that has children
-        if(target.includes('material_')) {
+        if(target && target.includes('material_')) {
             //it's one of the parent material checkboxes
             //find out which one
             let idParts = target.split('_');
@@ -1463,9 +1488,54 @@ export class AppComponent implements OnInit, OnDestroy {
             for (let reproduction of this.materialChildren[parentMaterialEnum]) {
                 this.filters['reproductions'][this.reproductionsType[reproduction]] = event.checked;       
             } 
+        } else if(target && target.includes('allnone_')) {
+            let idParts = target.split('_');
+            let group = idParts[1]; 
+            switch(group) { 
+                case 'materials': { 
+                    for (let material of this.materialsType.keys()) {
+                        this.filters['materials'][this.materialsType[material]] = event.checked;
+                    }
+                    for (let reproduction of this.reproductionsType.keys()) {
+                        this.filters['reproductions'][this.reproductionsType[reproduction]] = event.checked;    
+                    }
+                    break; 
+                } 
+                case 'uses': { 
+                    for (let use of this.usesType.keys()) {
+                        this.filters['uses'][this.usesType[use]] = event.checked;    
+                    }
+                    break; 
+                }
+                case 'statuses': { 
+                    for (let status of this.statusesType.keys()) {
+                        this.filters['statuses'][this.statusesType[status]] = event.checked;    
+                    }
+                    break; 
+                }
+                case 'licences': { 
+                    for (let licence of this.licencesType.keys()) {
+                        this.filters['licences'][this.licencesType[licence]] = event.checked;    
+                    }
+                    break; 
+                }
+                default: { 
+                    //statements; 
+                    break; 
+                } 
+            } 
+            
+            if (group === 'materials') {
+                //materials has two layers  
+            } else {
+                for (let item of this.filters[group]) {
+                    
+                }
+            }
+            
         }
         //if it's a child of a material, update the state of the parent material checkbox
-        if(target.includes('material_')) {
+        if(target && target.includes('material_')) {
             //it's one of the parent material checkboxes
             //find out which one
             let idParts = target.split('_');
@@ -1476,7 +1546,7 @@ export class AppComponent implements OnInit, OnDestroy {
             for (let reproduction of this.materialChildren[parentMaterialEnum]) {
                 this.filters['reproductions'][this.reproductionsType[reproduction]] = event.checked;       
             } 
-        } else if (target.includes('reproduction_')) {
+        } else if (target && target.includes('reproduction_')) {
             //for each material check how many are checked 
             for (let material of this.materialsType.keys()) {
                 console.log(material);
@@ -1493,7 +1563,8 @@ export class AppComponent implements OnInit, OnDestroy {
                     this.filters['materials'][this.materialsType[material]] = true; 
                     this.filters['materialsIndeterminacy'][this.materialsType[material]] = false; 
                 } else {
-                    this.filters['materialsIndeterminacy'][this.materialsType[material]] = true; 
+                    this.filters['materials'][this.materialsType[material]] = true; //needed so that parent filter doesn't override children 
+                    this.filters['materialsIndeterminacy'][this.materialsType[material]] = true; //BUT this is more powerful than checked which will be set by lne above 
                 }
             }
         }

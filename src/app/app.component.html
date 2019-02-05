@@ -1,34 +1,64 @@
 <div id="copyright-container">
     <mat-toolbar color="primary" class="example-toolbar">
-        <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+        <button mat-icon-button (click)="snav.toggle()" title="Filters"><mat-icon>menu</mat-icon></button>
         <h1 class="example-app-name">Copyright for instruction</h1>
     </mat-toolbar>
-    <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
-            <div fxLayout='row'>
-                    
-            </div>
-            <h4>Materials</h4>
-            <div *ngFor="let material of materialsType.keys()">
-                <mat-checkbox class="filter" [(ngModel)]="filters['materials'][materialsType[material]]" [(indeterminate)]="filters['materialsIndeterminacy'][materialsType[material]]" (change)="onFilterChange($event, 'material_'+materialsType[material])">{{materialsType[material]}}</mat-checkbox>
-                <div *ngFor="let reproduction of materialChildren[material]" class="nested-reproduction">
-                    <mat-checkbox class="filter" [(ngModel)]="filters['reproductions'][reproductionsType[reproduction]]" (change)="onFilterChange($event, 'reproduction_'+reproductionsType[reproduction])">{{reproductionDescriptions[reproductionsType[reproduction]]}}</mat-checkbox>
-                </div>
-            </div>
+    <mat-sidenav-container class="example-sidenav-container">
+        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches" [fixedInViewport]="mobileQuery.matches">
+            <mat-accordion>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Materials
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-checkbox class="all-none-filter" [(ngModel)]="allNoneCheckBoxes['materials']" [(indeterminate)]="allNoneCheckBoxes['materialsIndeterminacy']" (change)="onFilterChange($event, 'allnone_materials')">Select all/none</mat-checkbox>
+                    <div *ngFor="let material of materialsType.keys()">
+                        <mat-checkbox class="filter" [(ngModel)]="filters['materials'][materialsType[material]]" [(indeterminate)]="filters['materialsIndeterminacy'][materialsType[material]]" (change)="onFilterChange($event, 'material_'+materialsType[material])">{{materialsType[material]}}</mat-checkbox>
+                        <div *ngFor="let reproduction of materialChildren[material]" class="nested-reproduction">
+                            <mat-checkbox class="filter" [(ngModel)]="filters['reproductions'][reproductionsType[reproduction]]" (change)="onFilterChange($event, 'reproduction_'+reproductionsType[reproduction])">{{reproductionDescriptions[reproductionsType[reproduction]]}}</mat-checkbox>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Uses
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-checkbox class="filter" *ngFor="let use of usesType.keys()" [(ngModel)]="filters['uses'][usesType[use]]" (change)="onFilterChange()">{{useDescriptions[usesType[use]]}}</mat-checkbox>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Usability
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-checkbox class="filter" *ngFor="let status of statusesType.keys()" [(ngModel)]="filters['statuses'][statusesType[status]]" (change)="onFilterChange()">{{statusDescriptions[statusesType[status]]}}</mat-checkbox>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Licences &amp; exceptions
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-checkbox class="filter" *ngFor="let licence of licencesType.keys()" [(ngModel)]="filters['licences'][licencesType[licence]]" (change)="onFilterChange()">{{licenceDescriptions[licencesType[licence]]}}</mat-checkbox>
+                </mat-expansion-panel>
+            </mat-accordion>
+            <!--h4>Materials</h4>
+            
             <h4>Uses</h4>
             <mat-checkbox class="filter" *ngFor="let use of usesType.keys()" [(ngModel)]="filters['uses'][usesType[use]]" (change)="onFilterChange()">{{useDescriptions[usesType[use]]}}</mat-checkbox>
-            <!--h4>Reproductions</h4>
-            <mat-checkbox class="filter" *ngFor="let reproduction of reproductionsType.keys()" [(ngModel)]="filters['reproductions'][reproductionsType[reproduction]]" (change)="onFilterChange()">{{reproductionDescriptions[reproductionsType[reproduction]]}}</mat-checkbox-->
             <h4>Usability</h4>
             <mat-checkbox class="filter" *ngFor="let status of statusesType.keys()" [(ngModel)]="filters['statuses'][statusesType[status]]" (change)="onFilterChange()">{{statusDescriptions[statusesType[status]]}}</mat-checkbox>
-            <h4>Licences</h4>
-            <mat-checkbox class="filter" *ngFor="let licence of licencesType.keys()" [(ngModel)]="filters['licences'][licencesType[licence]]" (change)="onFilterChange()">{{licencesType[licence]}}</mat-checkbox>
+            <h4>Licences &amp; exceptions</h4>
+            <mat-checkbox class="filter" *ngFor="let licence of licencesType.keys()" [(ngModel)]="filters['licences'][licencesType[licence]]" (change)="onFilterChange()">{{licenceDescriptions[licencesType[licence]]}}</mat-checkbox-->
         </mat-sidenav>
         <mat-sidenav-content>
             <mat-tab-group>
                 <mat-tab label="By material">
                     <div fxLayout='row wrap'>
-                        <div *ngFor="let item of filteredItemReproductions" fxFlex.xs="100%" fxFlex.sm="50%" fxFlex.md="33%" fxFlex.lg="25%" fxFlex.xl="20%">
+                        <div *ngFor="let item of filteredItemReproductions" fxFlex.xs="100%" fxFlex.sm="50%" fxFlex.md="50%" fxFlex.lg="33%" fxFlex.xl="25%">
                             <mat-card>
                                 <mat-card-header>
                                     <div mat-card-avatar>
