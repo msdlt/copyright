@@ -11,6 +11,10 @@ mat-sidenav-container {
   padding-top: 64px;
 }
 
+.mat-expansion-panel {
+  box-shadow: none;
+}
+
 mat-toolbar {
   height: 64px;
   position: fixed;
@@ -86,6 +90,9 @@ h4 {
 .filter {
   display: block;
   margin-left: 1em;
+}
+.filter-title {
+  font-size: 1.2em;
 }
 .nested-reproduction {
   margin-left: 1em;

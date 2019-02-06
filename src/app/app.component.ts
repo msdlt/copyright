@@ -1474,9 +1474,8 @@ export class AppComponent implements OnInit, OnDestroy {
     }
     
     onFilterChange (event, target) {
-        //console.log(event);
-        //console.log(target);
-        //first of all, check whether the chcekbox clicked is one of the materials that has children
+        //Clicking all/none or materials headers chceks/unchecks children
+        //first of all, check whether the checkbox clicked is one of the materials that has children
         if(target && target.includes('material_')) {
             //it's one of the parent material checkboxes
             //find out which one
@@ -1488,6 +1487,27 @@ export class AppComponent implements OnInit, OnDestroy {
             for (let reproduction of this.materialChildren[parentMaterialEnum]) {
                 this.filters['reproductions'][this.reproductionsType[reproduction]] = event.checked;       
             } 
+            let countForMaterials = 0;
+            let countForMaterialsCheckboxes = 0;
+            for (let material of this.materialsType.keys()) {
+                //console.log(material);
+                for (let reproduction of this.materialChildren[material]) {
+                    countForMaterialsCheckboxes += 1;
+                    if (this.filters['reproductions'][this.reproductionsType[reproduction]] === true){
+                        countForMaterials += 1;
+                    }
+                }
+            }
+            if(countForMaterials===0) {
+                this.allNoneCheckBoxes['materials'] = false;
+                this.allNoneCheckBoxes['materialsIndeterminacy'] = false;
+            } else if (countForMaterials === countForMaterialsCheckboxes ) {
+                this.allNoneCheckBoxes['materials'] = true; 
+                this.allNoneCheckBoxes['materialsIndeterminacy'] = false; 
+            } else {
+                this.allNoneCheckBoxes['materials'] = true; //needed so that parent filter doesn't override children 
+                this.allNoneCheckBoxes['materialsIndeterminacy'] = true; //BUT this is more powerful than checked which will be set by line above 
+            }
         } else if(target && target.includes('allnone_')) {
             let idParts = target.split('_');
             let group = idParts[1]; 
@@ -1524,36 +1544,21 @@ export class AppComponent implements OnInit, OnDestroy {
                     break; 
                 } 
             } 
-            
-            if (group === 'materials') {
-                //materials has two layers  
-            } else {
-                for (let item of this.filters[group]) {
-                    
-                }
-            }
-            
         }
+        //Now deal with clicking children chnaging state (checked/unchecked/indeterminate) of parent
         //if it's a child of a material, update the state of the parent material checkbox
-        if(target && target.includes('material_')) {
-            //it's one of the parent material checkboxes
-            //find out which one
-            let idParts = target.split('_');
-            let parentMaterial = idParts[1];
-            let parentMaterialEnum = Materials[parentMaterial];
-            //and react to its state
-            //let's check all of its children
-            for (let reproduction of this.materialChildren[parentMaterialEnum]) {
-                this.filters['reproductions'][this.reproductionsType[reproduction]] = event.checked;       
-            } 
-        } else if (target && target.includes('reproduction_')) {
+        if (target && target.includes('reproduction_')) {
             //for each material check how many are checked 
+            let countForMaterials = 0;
+            let countForMaterialCheckboxes = 0;
             for (let material of this.materialsType.keys()) {
-                console.log(material);
+                //console.log(material);
                 let countForThisMaterial = 0;
                 for (let reproduction of this.materialChildren[material]) {
+                    countForMaterialCheckboxes += 1;
                     if (this.filters['reproductions'][this.reproductionsType[reproduction]] === true){
                         countForThisMaterial += 1;
+                        countForMaterials += 1;
                     }
                 }
                 if(countForThisMaterial===0) {
@@ -1567,7 +1572,83 @@ export class AppComponent implements OnInit, OnDestroy {
                     this.filters['materialsIndeterminacy'][this.materialsType[material]] = true; //BUT this is more powerful than checked which will be set by lne above 
                 }
             }
+            if(countForMaterials===0) {
+                this.allNoneCheckBoxes['materials'] = false;
+                this.allNoneCheckBoxes['materialsIndeterminacy'] = false;
+            } else if (countForMaterials === countForMaterialCheckboxes) {
+                this.allNoneCheckBoxes['materials'] = true; 
+                this.allNoneCheckBoxes['materialsIndeterminacy'] = false; 
+            } else {
+                this.allNoneCheckBoxes['materials'] = true; //needed so that parent filter doesn't override children 
+                this.allNoneCheckBoxes['materialsIndeterminacy'] = true; //BUT this is more powerful than checked which will be set by line above 
+            }
+        } else if (target && target.includes('use_')) {
+            //for each use check how many are checked 
+            let countForUses = 0;
+            for (let use of this.usesType.keys()) {
+                if (this.filters['uses'][this.usesType[use]] === true){
+                    countForUses += 1;
+                }
+                if(countForUses===0) {
+                    this.allNoneCheckBoxes['uses'] = false;
+                    this.allNoneCheckBoxes['usesIndeterminacy'] = false;
+                } else if (countForUses === this.usesType.keys().length) {
+                    this.allNoneCheckBoxes['uses'] = true; 
+                    this.allNoneCheckBoxes['usesIndeterminacy'] = false; 
+                } else {
+                    this.allNoneCheckBoxes['uses'] = true; //needed so that parent filter doesn't override children 
+                    this.allNoneCheckBoxes['usesIndeterminacy'] = true; //BUT this is more powerful than checked which will be set by line above 
+                }
+            }
+        } else if (target && target.includes('status_')) {
+            //for each use check how many are checked 
+            let countForStatuses = 0;
+            for (let use of this.statusesType.keys()) {
+                if (this.filters['statuses'][this.statusesType[use]] === true){
+                    countForStatuses += 1;
+                }
+                if(countForStatuses===0) {
+                    this.allNoneCheckBoxes['statuses'] = false;
+                    this.allNoneCheckBoxes['statusesIndeterminacy'] = false;
+                } else if (countForStatuses === this.statusesType.keys().length) {
+                    this.allNoneCheckBoxes['statuses'] = true; 
+                    this.allNoneCheckBoxes['statusesIndeterminacy'] = false; 
+                } else {
+                    this.allNoneCheckBoxes['statuses'] = true; //needed so that parent filter doesn't override children 
+                    this.allNoneCheckBoxes['statusesIndeterminacy'] = true; //BUT this is more powerful than checked which will be set by line above 
+                }
+            }
+        } else if (target && target.includes('licence_')) {
+            //for each use check how many are checked 
+            let countForLicences = 0;
+            for (let use of this.licencesType.keys()) {
+                if (this.filters['licences'][this.licencesType[use]] === true){
+                    countForLicences += 1;
+                }
+                if(countForLicences===0) {
+                    this.allNoneCheckBoxes['licences'] = false;
+                    this.allNoneCheckBoxes['licencesIndeterminacy'] = false;
+                } else if (countForLicences === this.licencesType.keys().length) {
+                    this.allNoneCheckBoxes['licences'] = true; 
+                    this.allNoneCheckBoxes['licencesIndeterminacy'] = false; 
+                } else {
+                    this.allNoneCheckBoxes['licences'] = true; //needed so that parent filter doesn't override children 
+                    this.allNoneCheckBoxes['licencesIndeterminacy'] = true; //BUT this is more powerful than checked which will be set by line above 
+                }
+            }
         }
+        
+        /*this.allNoneCheckBoxes['uses'] = true;
+        this.allNoneCheckBoxes['statuses'] = true;
+        this.allNoneCheckBoxes['materials'] = true;
+        this.allNoneCheckBoxes['licences'] = true;
+        this.allNoneCheckBoxes['reproductions'] = true;
+        
+        this.allNoneCheckBoxes['usesIndeterminacy'] = false;
+        this.allNoneCheckBoxes['statusesIndeterminacy'] = false;
+        this.allNoneCheckBoxes['materialsIndeterminacy'] = false;
+        this.allNoneCheckBoxes['licencesIndeterminacy'] = false;
+        this.allNoneCheckBoxes['reproductionsIndeterminacy'] = false;*/
                 
         this.filteredItemReproductions = []
         //basically run though and only transfer to this.filteredItemReproductions and this.filteredItemUses those items which match filters
