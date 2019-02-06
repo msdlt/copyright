@@ -228,6 +228,17 @@ export class FilterComponent implements OnInit, OnDestroy {
         "Unlicensed": "Unlicensed: Not covered by any licences, agreements or exceptions"
     };
     
+    licenceLinks = {
+        "CLA": "https://www.glam.ox.ac.uk/copyright-licences",
+        "ERA": "https://www.glam.ox.ac.uk/copyright-licences",
+        "YouTube": "https://www.youtube.com/static?gl=GB&template=terms",
+        "Section30": "https://www.bodleian.ox.ac.uk/bodley/using-this-library/copyright",
+        //"Section31A31B": "Section 31A & 31B: Accessible copies for disabled users",
+        "Section32": "https://www.bodleian.ox.ac.uk/bodley/using-this-library/copyright",
+        "Section34": "https://www.bodleian.ox.ac.uk/bodley/using-this-library/copyright",
+        "Unlicensed": "https://www.bodleian.ox.ac.uk/bodley/using-this-library/copyright"
+    };
+    
     //setup which reproductions belong to which material
     materialChildren: any = new Array();
         
@@ -239,7 +250,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32, Licences.Section30], 
-            "explanation": "under terms of CLA licence; or Quotation (criticism and review) or Illustration for Instruction exceptions, subject to \"fair dealing\"" 
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a>; or <a href=\""+this.licenceLinks['Section30']+"\" target=\"_blank\">Quotation (criticism and review)</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exceptions, subject to \"fair dealing\"" 
         },
         { 
             "type": Materials.Text, 
@@ -247,7 +258,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32, Licences.Section30], 
-            "explanation": "under terms of CLA licence; or Quotation (criticism and review) or Illustration for Instruction exceptions, subject to \"fair dealing\"" 
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a>; or <a href=\""+this.licenceLinks['Section30']+"\" target=\"_blank\">Quotation (criticism and review)</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exceptions, subject to \"fair dealing\"" 
         },
         { 
             "type": Materials.Text, 
@@ -255,7 +266,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32, Licences.Section30], 
-            "explanation": "under terms of CLA licence; or Quotation (criticism and review) or Illustration for Instruction exceptions, subject to \"fair dealing\"" 
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a>; or <a href=\""+this.licenceLinks['Section30']+"\" target=\"_blank\">Quotation (criticism and review)</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exceptions, subject to \"fair dealing\"" 
         },
         { 
             "type": Materials.Text, 
@@ -263,7 +274,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32, Licences.Section30], 
-            "explanation": "under terms of CLA licence; or Quotation (criticism and review) or Illustration for Instruction exceptions, subject to \"fair dealing\"" 
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a>; or <a href=\""+this.licenceLinks['Section30']+"\" target=\"_blank\">Quotation (criticism and review)</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exceptions, subject to \"fair dealing\"" 
         },
         /*{ 
             "type": Materials.Text, 
@@ -271,7 +282,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Email, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.FairDealing], 
-            "explanation": "under terms of CLA licence or \"fair dealing\" exception" 
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or \"fair dealing\" exception" 
         },*/
         { 
             "type": Materials.Text, 
@@ -279,7 +290,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.Section30], 
-            "explanation": "under Quotation (criticism and review) or Illustration for Instruction exceptions, subject to \"fair dealing\" - talk to your librarian" 
+            "explanation": "under <a href=\""+this.licenceLinks['Section30']+"\" target=\"_blank\">Quotation (criticism and review)</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exceptions, subject to \"fair dealing\" - talk to your librarian" 
         },
         { 
             "type": Materials.Text, 
@@ -287,7 +298,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.Section30], 
-            "explanation": "under Quotation (criticism and review) or Illustration for Instruction exceptions, subject to \"fair dealing\" - talk to your librarian" 
+            "explanation": "under <a href=\""+this.licenceLinks['Section30']+"\" target=\"_blank\">Quotation (criticism and review)</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exceptions, subject to \"fair dealing\" - talk to your librarian" 
         },
         //TEXT - Extract
         { 
@@ -296,7 +307,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of CLA licence or Illustration for Instruction exception, subject to \"fair dealing\"" 
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\"" 
         },
         { 
             "type": Materials.Text, 
@@ -304,7 +315,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of CLA licence or Illustration for Instruction exception, subject to \"fair dealing\"" 
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\"" 
         },
         { 
             "type": Materials.Text, 
@@ -312,7 +323,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of CLA licence or Illustration for Instruction exception, subject to \"fair dealing\"" 
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\"" 
         },
         { 
             "type": Materials.Text, 
@@ -320,7 +331,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.FreeCLA, 
             "licences": [Licences.CLA], 
-            "explanation": "under terms of CLA licence - report to CLA coordinator" 
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator" 
         },
         /*{ 
             "type": Materials.Text, 
@@ -328,7 +339,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Email, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.FairDealing], 
-            "explanation": "under terms of CLA licence or \"fair dealing\" exception" 
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or \"fair dealing\" exception" 
         },*/
         { 
             "type": Materials.Text, 
@@ -336,7 +347,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.May, 
             "licences": [Licences.Section32],
-            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian" 
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian" 
         },
         { 
             "type": Materials.Text, 
@@ -344,7 +355,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.May, 
             "licences": [Licences.Section32],
-            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian" 
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian" 
         },
         //TEXT - Score extract
         { 
@@ -353,7 +364,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
             "licences": [Licences.Section32],
-            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\"" 
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\"" 
         },
         { 
             "type": Materials.Text, 
@@ -361,7 +372,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording, 
             "status": Statuses.Free, 
             "licences": [Licences.Section32],
-            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\"" 
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\"" 
         },
         { 
             "type": Materials.Text, 
@@ -369,7 +380,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.Free, 
             "licences": [Licences.Section32],
-            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\"" 
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\"" 
         },
         { 
             "type": Materials.Text, 
@@ -377,7 +388,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.Free, 
             "licences": [Licences.Section32],
-            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\""
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\""
         },
         /*{ 
             "type": Materials.Text, 
@@ -426,7 +437,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.Free,
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of CLA licence or Illustration for Instruction exception, subject to \"fair dealing\"" 
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\"" 
         },
         { 
             "type": Materials.Text, 
@@ -434,7 +445,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.FreeCLA, 
             "licences": [Licences.CLA], 
-            "explanation": "under terms of CLA licence - report to CLA coordinator"
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator"
         },
         /*{ 
             "type": Materials.Text, 
@@ -483,7 +494,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.FreeCLA,
             "licences": [Licences.CLA], 
-            "explanation": "under terms of CLA licence - report to CLA coordinator" 
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator" 
         },
         { 
             "type": Materials.Text, 
@@ -491,7 +502,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.FreeCLA, 
             "licences": [Licences.CLA], 
-            "explanation": "under terms of CLA licence - report to CLA coordinator"
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator"
         },
         /*{ 
             "type": Materials.Text, 
@@ -540,7 +551,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.Free,
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of CLA licence or Illustration for Instruction exception, subject to \"fair dealing\"" 
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\"" 
         },
         { 
             "type": Materials.Text, 
@@ -548,7 +559,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.FreeCLA, 
             "licences": [Licences.CLA], 
-            "explanation": "under terms of CLA licence - report to CLA coordinator"
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator"
         },
         /*{ 
             "type": Materials.Text, 
@@ -597,7 +608,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.FreeCLA,
             "licences": [Licences.CLA], 
-            "explanation": "under terms of CLA licence - report to CLA coordinator" 
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator" 
         },
         { 
             "type": Materials.Text, 
@@ -605,7 +616,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.FreeCLA, 
             "licences": [Licences.CLA], 
-            "explanation": "under terms of CLA licence - report to CLA coordinator"
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator"
         },
         /*{ 
             "type": Materials.Text, 
@@ -695,7 +706,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
             "licences": [Licences.Section32],
-            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\""
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\""
         },
         { 
             "type": Materials.Image, 
@@ -703,7 +714,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.CLA], 
-            "explanation": "under terms of CLA licence or Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian" 
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian" 
         },
         { 
             "type": Materials.Image, 
@@ -711,7 +722,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.CLA], 
-            "explanation": "under terms of CLA licence or Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian" 
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian" 
         },
         { 
             "type": Materials.Image, 
@@ -719,7 +730,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.CLA], 
-            "explanation": "under terms of CLA licence or Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian" 
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian" 
         },
         /*{ 
             "type": Materials.Image, 
@@ -752,7 +763,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of CLA licence or Illustration for Instruction exception, subject to \"fair dealing\""
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\""
         },
         { 
             "type": Materials.Image, 
@@ -760,7 +771,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of CLA licence or Illustration for Instruction exception, subject to \"fair dealing\""
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\""
         },
         { 
             "type": Materials.Image, 
@@ -768,7 +779,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.May, 
             "licences": [Licences.Section32],
-            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian" 
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian" 
         },
         { 
             "type": Materials.Image, 
@@ -776,7 +787,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of CLA licence or Illustration for Instruction exception, subject to \"fair dealing\""
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\""
         },
         /*{ 
             "type": Materials.Image, 
@@ -784,7 +795,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Email, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.FairDealing], 
-            "explanation": "under terms of CLA licence or \"fair dealing\" exception" 
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or \"fair dealing\" exception" 
         },*/
         { 
             "type": Materials.Image, 
@@ -800,7 +811,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.CLA], 
-            "explanation": "under terms of CLA licence or Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian"
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian"
         },
         //Broadcast - Box of Broadcasts
         { 
@@ -809,7 +820,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
             "licences": [Licences.ERA], 
-            "explanation": "under terms of ERA licence"
+            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a>"
         },
         { 
             "type": Materials.Broadcast, 
@@ -817,7 +828,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.Free, 
             "licences": [Licences.ERA], 
-            "explanation": "under terms of ERA licence"
+            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a>"
         },
         { 
             "type": Materials.Broadcast, 
@@ -833,7 +844,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.Free, 
             "licences": [Licences.ERA], 
-            "explanation": "under terms of ERA licence"
+            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a>"
         },
         /*{ 
             "type": Materials.Broadcast, 
@@ -866,7 +877,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
             "licences": [Licences.ERA, Licences.Section32], 
-            "explanation": "under terms of ERA licence or Illustration for Instruction exception, subject to \"fair dealing\""
+            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\""
         },
         { 
             "type": Materials.Broadcast, 
@@ -874,7 +885,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.Free, 
             "licences": [Licences.ERA, Licences.Section32], 
-            "explanation": "under terms of ERA licence or Illustration for Instruction exception, subject to \"fair dealing\""
+            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\""
         },
         { 
             "type": Materials.Broadcast, 
@@ -890,7 +901,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.Free, 
             "licences": [Licences.ERA, Licences.Section32], 
-            "explanation": "under terms of ERA licence or Illustration for Instruction exception, subject to \"fair dealing\""
+            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\""
         },
         /*{ 
             "type": Materials.Broadcast, 
@@ -914,7 +925,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.ERA], 
-            "explanation": "under terms of ERA licence or Illustration for Instruction exception, subject to \"fair dealing\"- talk to your librarian"
+            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\"- talk to your librarian"
         },
         //Broadcast - Broadcast
         { 
@@ -923,7 +934,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.May, 
             "licences": [Licences.ERA], 
-            "explanation": "under terms of ERA licence - talk to your librarian"
+            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> - talk to your librarian"
         },
         { 
             "type": Materials.Broadcast, 
@@ -931,7 +942,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.May, 
             "licences": [Licences.ERA], 
-            "explanation": "under terms of ERA licence - talk to your librarian"
+            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> - talk to your librarian"
         },
         { 
             "type": Materials.Broadcast, 
@@ -947,7 +958,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.May, 
             "licences": [Licences.ERA], 
-            "explanation": "under terms of ERA licence - talk to your librarian"
+            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> - talk to your librarian"
         },
         /*{ 
             "type": Materials.Broadcast, 
@@ -980,7 +991,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
             "licences": [Licences.YouTube], 
-            "explanation": "under TouTube terms and conditions"
+            "explanation": "under <a href=\""+this.licenceLinks['YouTube']+"\" target=\"_blank\">YouTube terms and conditions</a>"
         },
         { 
             "type": Materials.Video, 
@@ -988,7 +999,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.Free, 
             "licences": [Licences.YouTube], 
-            "explanation": "under TouTube terms and conditions"
+            "explanation": "under <a href=\""+this.licenceLinks['YouTube']+"\" target=\"_blank\">YouTube terms and conditions</a>"
         },
         { 
             "type": Materials.Video, 
@@ -996,7 +1007,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.Free, 
             "licences": [Licences.YouTube], 
-            "explanation": "under TouTube terms and conditions"
+            "explanation": "under <a href=\""+this.licenceLinks['YouTube']+"\" target=\"_blank\">YouTube terms and conditions</a>"
         },
         { 
             "type": Materials.Video, 
@@ -1004,7 +1015,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.Free, 
             "licences": [Licences.YouTube], 
-            "explanation": "under TouTube terms and conditions"
+            "explanation": "under <a href=\""+this.licenceLinks['YouTube']+"\" target=\"_blank\">YouTube terms and conditions</a>"
         },
         /*{ 
             "type": Materials.Video, 
@@ -1012,7 +1023,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Email, 
             "status": Statuses.Free, 
             "licences": [Licences.YouTube], 
-            "explanation": "under TouTube terms and conditions"
+            "explanation": "under <a href=\""+this.licenceLinks['YouTube']+"\" target=\"_blank\">YouTube terms and conditions</a>"
         },*/
         { 
             "type": Materials.Video, 
@@ -1020,7 +1031,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.Free, 
             "licences": [Licences.YouTube], 
-            "explanation": "under TouTube terms and conditions"
+            "explanation": "under <a href=\""+this.licenceLinks['YouTube']+"\" target=\"_blank\">YouTube terms and conditions</a>"
         },
         { 
             "type": Materials.Video, 
@@ -1028,7 +1039,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.Free, 
             "licences": [Licences.YouTube], 
-            "explanation": "under TouTube terms and conditions"
+            "explanation": "under <a href=\""+this.licenceLinks['YouTube']+"\" target=\"_blank\">YouTube terms and conditions</a>"
         },
         //Film - Youtube untrusted
         { 
@@ -1094,7 +1105,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
             "licences": [Licences.Section32],
-            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\""
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\""
         },
         { 
             "type": Materials.Video, 
@@ -1102,7 +1113,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian"
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian"
         },
         { 
             "type": Materials.Video, 
@@ -1118,7 +1129,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian"
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian"
         },
         /*{ 
             "type": Materials.Video, 
@@ -1208,7 +1219,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian"
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian"
         },
         { 
             "type": Materials.Audio, 
@@ -1216,7 +1227,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian"
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian"
         },
         { 
             "type": Materials.Audio, 
@@ -1232,7 +1243,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian"
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian"
         },
         /*{ 
             "type": Materials.Audio, 
@@ -1265,7 +1276,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian"
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian"
         },
         { 
             "type": Materials.Audio, 
@@ -1273,7 +1284,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian"
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian"
         },
         { 
             "type": Materials.Audio, 
@@ -1289,7 +1300,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under Illustration for Instruction exception, subject to \"fair dealing\" - talk to your librarian"
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian"
         },
         /*{ 
             "type": Materials.Audio, 

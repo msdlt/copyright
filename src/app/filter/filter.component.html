@@ -86,7 +86,7 @@
                                                     </mat-panel-title>
                                                 </mat-expansion-panel-header>
                                                 <h4>{{statusDescriptions[EnumTable.Statuses[reproductionUse.status]]}}</h4>
-                                                <span *ngIf="reproductionUse.status != 4">{{reproductionUse.explanation}}</span>
+                                                <span *ngIf="reproductionUse.status != 4" [innerHTML]="reproductionUse.explanation"></span>
                                                 <span *ngIf="reproductionUse.status == 4">for this setting</span>
                                             </mat-expansion-panel>
                                         </mat-accordion>
