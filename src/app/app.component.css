@@ -2,98 +2,21 @@
   min-height: 100%;
 }
 
-#copyright-container {
-  min-height: 100vh !important;
+.toolbar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
 }
 
-mat-sidenav-container {
-  min-height: 100vh !important;
-  padding-top: 64px;
+.toolbar a {
+    color: white;
+    text-decoration: none;
 }
 
-.mat-expansion-panel {
-  box-shadow: none;
-}
-
-mat-toolbar {
-  height: 64px;
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  z-index: 100;
-  width: 100%  !important;
-}
-
-mat-sidenav {
-  padding: 64px 1em 1em 1em;
-  min-width: 200px;
-  min-height: 100%;
-}
-
-.header-icon {
-  font-size: 40px;
-  color: rgba(0,0,0,.7);
-}
-.status-icon{
-  font-size: 17px;
-  margin-right: 15px;
-}
-.na {
-  color: #ccc;
-}
-.free {
-  color: #2dc937;
-}
-.cla-only {
-  color: #99c140;
-}
-.maybe {
-  color: #e7b416;
-}
-.forbidden {
-  color: #cc3232;
-}
-mat-expansion-panel h4 {
-  margin-top: 0px;
-}
-mat-card {
-  margin: 0.5em;
-  padding: 0px;
-}
-mat-card-header {
-  padding: 15px 15px 0px 15px;
-}
-mat-card-subtitle {
-  height: 32px;
-}
-
-h4 {
-  font-family: Roboto,"Helvetica Neue",sans-serif;
-}
-
-.example-sidenav-container {
-  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
-     causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
-  flex: 1;
-  /*min-height: 100%;*/
-}
-
-.example-is-mobile .example-sidenav-container {
-  /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
-     `<body>` to be our scrolling element for mobile layouts. */
-  flex: 1 0 auto;
-}
-.all-none-filter {
-  display: block;
-  margin: 0px 0px 0.5em 1em;    
-}
-.filter {
-  display: block;
-  margin-left: 1em;
-}
-.filter-title {
-  font-size: 1.2em;
-}
-.nested-reproduction {
-  margin-left: 1em;
+.menu-item {
+    padding: 0.1em 0 0 1em;
+    font-size: 0.9em !important;
 }

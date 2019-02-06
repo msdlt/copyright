@@ -1,0 +1,71 @@
+.home-container {
+    padding-top: 64px;
+}
+
+.docs-header-background {
+    background: #3f51b5;
+}
+.docs-header-section {
+    text-align: center;
+    padding: 60px 0 60px 0;
+}
+.docs-header-headline {
+    color: #fff;
+    font: 400 24px/32px Roboto,"Helvetica Neue",sans-serif;
+}
+.docs-header-headline h1 {
+    font-size: 56px;
+    font-weight: 300;
+    line-height: 56px;
+    margin: 15px 5px;
+}
+.docs-header-headline h2 {
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 28px;
+    margin: 15px 0 25px;
+}
+.docs-homepage-promo {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+}
+.docs-homepage-row {
+    display: flex;
+    max-width: 920px;
+    margin: 60px 0 0px 0px;
+    color: rgba(0,0,0,.54);
+}
+.docs-homepage-reverse-row {
+    flex-direction: row-reverse;
+}
+.docs-homepage-promo-desc, .docs-homepage-promo-img {
+    width: 50%;
+}
+
+.docs-homepage-promo-img {
+    padding: 2em;
+}
+
+.docs-homepage-promo-desc {
+    line-height: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.docs-homepage-promo h2 {
+    font-size: 25px;
+    font-weight: 400;
+    margin: 0 0 16px;
+    padding: 0;
+}
+mat-grid-tile fa-icon {
+    color: #ff4081;   
+    font-size: 5em;
+}
+
+/*SVGS*/
+#embedded-svg-path {
+    fill: #ff4081;   
+}
