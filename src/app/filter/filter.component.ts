@@ -1517,6 +1517,7 @@ export class FilterComponent implements OnInit, OnDestroy {
                 case 'materials': { 
                     for (let material of this.materialsType.keys()) {
                         this.filters['materials'][this.materialsType[material]] = event.checked;
+                        this.filters['materialsIndeterminacy'][this.materialsType[material]] = false;
                     }
                     for (let reproduction of this.reproductionsType.keys()) {
                         this.filters['reproductions'][this.reproductionsType[reproduction]] = event.checked;    
