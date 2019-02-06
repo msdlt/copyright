@@ -8,8 +8,14 @@
         </div>
     </header>
     <div class="docs-homepage-promo">
-        <div class="docs-homepage-row">
-            <div class="docs-homepage-promo-img">
+        <div class="docs-homepage-row" fxLayout="row">
+            <div fxFlex="100" class="docs-homepage-promo-desc">
+                <p>This site has been put together by MSD Learning Technologies and the Bodleian Libraries to help you find the right way to use materials for which you don't own the copyright <strong> for teaching students at your own institution in the UK</strong>. However, copyright is complicated. We have done our best to present our understanding of UK law on this but <strong>this is not legal advice</strong>. If you are in any doubt, please talk to an appropriate librarian.</p>
+                <p>If you are hoping to be able to material in your teaching, follow the steps below:</p>
+            </div>
+        </div>
+        <div class="docs-homepage-row" fxLayout="row">
+            <div fxFlex="50" fxHide.lt-md class="docs-homepage-promo-img">
                 <svg
                    version="1.1"
                    id="Layer_1"
@@ -28,13 +34,26 @@
                    inkscape:connector-curvature="0" />
                 </svg>
             </div>
-            <div class="docs-homepage-promo-desc">
-                <h2 _ngcontent-c17="">A. Is it Public Domain?</h2>
-                <p _ngcontent-c17="">Hit the ground running with comprehensive, modern UI components that work across the web, mobile and desktop.</p>
+            <div fxFlex="50" fxFlex.lt-md="100" class="docs-homepage-promo-desc">
+                <h2>A. Is it Public Domain?</h2>
+                <p>Public domain works are those whose intellectual property rights have expired, been forfeited, or are otherwise inapplicable. When trying to determine whether something is in the public domain or not, consider the following:</p>
+                <ol>
+                    <li>Does the work clearly state 'Public Domain' or 'CC0'</li>
+                    <li>Do the rules of the UK apply?:</li>
+                    <ul>
+                        <li>70 years after death of author (text)</li>
+                        <li>70 years from creation date (sound)</li>
+                        <li>70 years after death of main contributors (films)</li>
+                    </ul>
+                    <li>A reprographic of a work (e.g digital image of old photograph) has a new copyright life</li>
+                    <li>Any adaptation of a work is a new copryight work</li>
+                </ol>
+                <h4>Where can I find public domain images?</h4>
+                [LINK TO Rachel Scanlon's new site]
             </div>
         </div>
-        <div class="docs-homepage-row docs-homepage-reverse-row">
-            <div _ngcontent-c17="" class="docs-homepage-promo-img">
+        <div fxLayout="row-reverse" class="docs-homepage-row docs-homepage-reverse-row">
+            <div fxFlex="50" fxHide.lt-md class="docs-homepage-promo-img">
                 <svg 
                     version="1.0" 
                     id="Layer_1" 
@@ -70,13 +89,15 @@
                     </g>
                 </svg>
             </div>
-            <div _ngcontent-c17="" class="docs-homepage-promo-desc">
-                <h2 _ngcontent-c17="">B. Is it licenced by Creative Commons?</h2>
-                <p _ngcontent-c17="">Finely tuned performance, because every millisecond counts. Fully tested across modern browsers.</p>
+            <div fxFlex="50" fxFlex.lt-md="100" class="docs-homepage-promo-desc">
+                <h2 >B. Is it licenced by Creative Commons or Open Access?</h2>
+                <p >You are free to use Open Access and Creative Commons materials as long as you adhere to the terms of the licence – most commonly clearly acknowledging the copyright holder/source of the work. Creative Commons licences come in various forms – see: https://creativecommons.org/licenses/ for further details
+                <h4>Where can I find public domain images?</h4>
+                [LINK TO Rachel Scanlon's new site]
             </div>
         </div>
-        <div class="docs-homepage-row">
-            <div class="docs-homepage-promo-img">
+        <div fxLayout="row" class="docs-homepage-row">
+            <div fxFlex="50" fxHide.lt-md class="docs-homepage-promo-img">
                 <mat-grid-list cols="3" rowHeight="1:1">
                     <mat-grid-tile><fa-icon [icon]="faBook"></fa-icon></mat-grid-tile>
                     <mat-grid-tile><fa-icon [icon]="faChalkboardTeacher"></fa-icon></mat-grid-tile>
@@ -89,9 +110,11 @@
                     <mat-grid-tile><fa-icon [icon]="faShareSquare"></fa-icon></mat-grid-tile>
                 </mat-grid-list>
             </div>
-            <div class="docs-homepage-promo-desc">
-                <h2 _ngcontent-c17="">C. Use our copyright browser</h2>
-                <p _ngcontent-c17="">You can browse by the type of material you wish to use or the context in which you wish to use it. Filters allow you to refine your choices by material, use, usability and licences &amp; exceptions. </p>
+            <div fxFlex="50" fxFlex.lt-md="100" class="docs-homepage-promo-desc">
+                <h2>C. Use our copyright browser</h2>
+                <p>You can browse by the type of material you wish to use or the context in which you wish to use it. Filters allow you to refine your choices by material, use, usability and licences &amp; exceptions. </p>
+                <p class="button-para"><a routerLink="/filters" mat-raised-button color="accent" class="browse-button">BROWSE</a></p>
+                <p>Copyright is complicated. We have done our best to present our understanding of UK law on this but <strong>this is not legal advice</strong>. If you are in any doubt, please talk to an appropriate librarian.</p>
             </div>
         </div>
     </div>

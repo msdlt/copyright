@@ -1,0 +1,23 @@
+div.footer {
+  background-color: #404040;
+  color: #999;
+  min-height: 150px;
+}
+
+button.sb-wrapper {
+  color: #999 !important;
+  fill: #999 !important;
+}
+
+svg path {
+  fill: #999 !important;  
+}
+
+fa-icon {
+  color: #999 !important;  
+}
+
+a {
+  text-decoration: none;
+  color: #999;
+}
