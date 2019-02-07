@@ -1,7 +1,7 @@
 <div id="copyright-container">
     <mat-sidenav-container class="example-sidenav-container">
         <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches" [fixedInViewport]="mobileQuery.matches">
-            <div fxLayout='row'>
+            <div fxLayout='row' class="side-nav-internal">
                 <div fxFlex>
                     <mat-expansion-panel>
                         <mat-expansion-panel-header>
@@ -96,7 +96,7 @@
                         </mat-tab>
                         <mat-tab label="By use">
                             <div fxLayout='row wrap'>
-                                <div *ngFor="let item of filteredItemUses" fxFlex.xs="100%" fxFlex.sm="50%" fxFlex.md="33%" fxFlex.lg="25%" fxFlex.xl="20%">
+                                <div *ngFor="let item of filteredItemUses" fxFlex.xs="100%" fxFlex.sm="50%" fxFlex.md="50%" fxFlex.lg="33%" fxFlex.xl="25%">
                                     <mat-card>
                                         <mat-card-header>
                                             <div *ngIf="item.use == 0" mat-card-avatar><fa-icon [icon]="faChalkboardTeacher" class="header-icon"></fa-icon></div>

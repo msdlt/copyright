@@ -2,6 +2,7 @@ div.footer {
   background-color: #404040;
   color: #999;
   min-height: 150px;
+  padding: 1em 1em 2em 1em;
 }
 
 button.sb-wrapper {

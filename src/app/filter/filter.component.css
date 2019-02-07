@@ -8,6 +8,10 @@ mat-sidenav-container {
   /*padding-top: 64px;*/
 }
 
+.side-nav-internal {
+  width: 100%;
+}
+
 .mat-expansion-panel {
   box-shadow: none;
 }
@@ -15,6 +19,7 @@ mat-sidenav-container {
 mat-sidenav {
   padding: 1em 1em 1em 1em;
   min-width: 200px;
+  max-width: 304px;
   min-height: 100%;
 }
 
