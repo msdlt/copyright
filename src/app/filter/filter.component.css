@@ -14,13 +14,42 @@ mat-sidenav-container {
 
 .mat-expansion-panel {
   box-shadow: none;
+  width: 100%;
 }
+
+.mat-expansion-panel-content {
+  width: 100%;
+}
+
+/deep/ .mat-checkbox-layout { white-space: normal !important; }
 
 mat-sidenav {
   padding: 1em 1em 1em 1em;
   min-width: 200px;
-  max-width: 304px;
   min-height: 100%;
+}
+
+.mat-sidenav-desktop {
+  padding: 1em 1em 1em 1em;
+  min-width: 200px;
+  min-height: 100%;
+}
+
+.mat-sidenav-mobile {
+  padding: 1em 1em 1em 1em;
+  min-width: 200px;
+  min-height: 100%;
+  max-width: 304px;
+}
+
+.close-button {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
+div.close-button-container {
+  height: 1em;
 }
 
 .header-icon {
