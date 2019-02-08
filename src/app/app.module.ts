@@ -47,10 +47,9 @@ const appRoutes: Routes = [
         FontAwesomeModule,
         ShareButtonsModule,
         RouterModule.forRoot(
-            appRoutes,
-            { 
-                //enableTracing: true // <-- debugging purposes only
-            } 
+            appRoutes, {
+                scrollPositionRestoration: 'enabled'
+            }
         )
     ],
     providers: [],
