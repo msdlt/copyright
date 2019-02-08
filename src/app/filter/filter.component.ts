@@ -232,10 +232,10 @@ export class FilterComponent implements OnInit, OnDestroy {
         "CLA": "https://www.glam.ox.ac.uk/copyright-licences",
         "ERA": "https://www.glam.ox.ac.uk/copyright-licences",
         "YouTube": "https://www.youtube.com/static?gl=GB&template=terms",
-        "Section30": "https://www.bodleian.ox.ac.uk/bodley/using-this-library/copyright",
+        "Section30": "https://www.gov.uk/guidance/exceptions-to-copyright#criticism-review-and-reporting-current-events",
         //"Section31A31B": "Section 31A & 31B: Accessible copies for disabled users",
-        "Section32": "https://www.bodleian.ox.ac.uk/bodley/using-this-library/copyright",
-        "Section34": "https://www.bodleian.ox.ac.uk/bodley/using-this-library/copyright",
+        "Section32": "https://www.gov.uk/guidance/exceptions-to-copyright#teaching",
+        "Section34": "https://www.gov.uk/guidance/exceptions-to-copyright#teaching",
         "Unlicensed": "https://www.bodleian.ox.ac.uk/bodley/using-this-library/copyright"
     };
     
@@ -290,7 +290,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.Section30], 
-            "explanation": "under <a href=\""+this.licenceLinks['Section30']+"\" target=\"_blank\">Quotation (criticism and review)</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exceptions, subject to \"fair dealing\" - talk to your librarian" 
+            "explanation": "under <a href=\""+this.licenceLinks['Section30']+"\" target=\"_blank\">Quotation (criticism and review)</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exceptions, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>" 
         },
         { 
             "type": Materials.Text, 
@@ -298,7 +298,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.Section30], 
-            "explanation": "under <a href=\""+this.licenceLinks['Section30']+"\" target=\"_blank\">Quotation (criticism and review)</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exceptions, subject to \"fair dealing\" - talk to your librarian" 
+            "explanation": "under <a href=\""+this.licenceLinks['Section30']+"\" target=\"_blank\">Quotation (criticism and review)</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exceptions, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>" 
         },
         //TEXT - Extract
         { 
@@ -347,7 +347,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.May, 
             "licences": [Licences.Section32],
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian" 
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>" 
         },
         { 
             "type": Materials.Text, 
@@ -355,7 +355,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.May, 
             "licences": [Licences.Section32],
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian" 
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>" 
         },
         //TEXT - Score extract
         { 
@@ -714,7 +714,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.CLA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian" 
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\"><a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a></a>" 
         },
         { 
             "type": Materials.Image, 
@@ -722,7 +722,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.CLA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian" 
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>" 
         },
         { 
             "type": Materials.Image, 
@@ -730,7 +730,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.CLA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian" 
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>" 
         },
         /*{ 
             "type": Materials.Image, 
@@ -779,7 +779,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.May, 
             "licences": [Licences.Section32],
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian" 
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>" 
         },
         { 
             "type": Materials.Image, 
@@ -811,7 +811,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.CLA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian"
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         //Broadcast - Box of Broadcasts
         { 
@@ -925,7 +925,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.ERA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\"- talk to your librarian"
+            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\"- <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         //Broadcast - Broadcast
         { 
@@ -934,7 +934,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.May, 
             "licences": [Licences.ERA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> - talk to your librarian"
+            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         { 
             "type": Materials.Broadcast, 
@@ -942,7 +942,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.May, 
             "licences": [Licences.ERA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> - talk to your librarian"
+            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         { 
             "type": Materials.Broadcast, 
@@ -958,7 +958,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.May, 
             "licences": [Licences.ERA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> - talk to your librarian"
+            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         /*{ 
             "type": Materials.Broadcast, 
@@ -1113,7 +1113,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian"
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         { 
             "type": Materials.Video, 
@@ -1129,7 +1129,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian"
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         /*{ 
             "type": Materials.Video, 
@@ -1162,7 +1162,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under \"fair dealing\" exception - talk to your librarian"
+            "explanation": "under \"fair dealing\" exception - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         { 
             "type": Materials.Video, 
@@ -1219,7 +1219,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian"
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         { 
             "type": Materials.Audio, 
@@ -1227,7 +1227,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian"
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         { 
             "type": Materials.Audio, 
@@ -1243,7 +1243,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian"
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         /*{ 
             "type": Materials.Audio, 
@@ -1276,7 +1276,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian"
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         { 
             "type": Materials.Audio, 
@@ -1284,7 +1284,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian"
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         { 
             "type": Materials.Audio, 
@@ -1300,7 +1300,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - talk to your librarian"
+            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         /*{ 
             "type": Materials.Audio, 
