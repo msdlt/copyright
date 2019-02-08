@@ -122,7 +122,7 @@
                                                     </mat-panel-title>
                                                 </mat-expansion-panel-header>
                                                 <h4>{{statusDescriptions[EnumTable.Statuses[materialReproduction.status]]}}</h4>
-                                                <span *ngIf="materialReproduction.status != 4">{{materialReproduction.explanation}}</span>
+                                                <span *ngIf="materialReproduction.status != 4" [innerHTML]="materialReproduction.explanation"></span>
                                                 <span *ngIf="materialReproduction.status == 4">for this setting</span>
                                             </mat-expansion-panel>
                                         </mat-accordion>
