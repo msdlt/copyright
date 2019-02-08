@@ -2,6 +2,14 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
 
+## Installing
+
+Clone this repository then run `npm install` from the containing folder
+
+## Changing advice
+
+The easily(ish) editable bits are wrapped in `/** BEGIN EDITABLE MATERIAL **/` and `/** END EDITABLE MATERIAL **/`. Eventually, I hope to pulll these out into a separate text file and/or create an editing interface - any help gratefully recieved.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
