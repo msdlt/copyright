@@ -329,9 +329,9 @@ export class FilterComponent implements OnInit, OnDestroy {
             "type": Materials.Text, 
             "reproduction": Reproductions.TextExtract, 
             "use": Uses.VLE, 
-            "status": Statuses.FreeCLA, 
-            "licences": [Licences.CLA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator" 
+            "status": Statuses.Free, 
+            "licences": [Licences.CLA, Licences.Section32], 
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\"" 
         },
         /*{ 
             "type": Materials.Text, 
@@ -435,9 +435,9 @@ export class FilterComponent implements OnInit, OnDestroy {
             "type": Materials.Text, 
             "reproduction": Reproductions.ChapterPrinted, 
             "use": Uses.Handout, 
-            "status": Statuses.Free,
+            "status": Statuses.FreeCLA,
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\"" 
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator"
         },
         { 
             "type": Materials.Text, 
@@ -549,9 +549,9 @@ export class FilterComponent implements OnInit, OnDestroy {
             "type": Materials.Text, 
             "reproduction": Reproductions.ChaptereBook, 
             "use": Uses.Handout, 
-            "status": Statuses.Free,
+            "status": Statuses.FreeCLA,
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\"" 
+            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator" 
         },
         { 
             "type": Materials.Text, 
