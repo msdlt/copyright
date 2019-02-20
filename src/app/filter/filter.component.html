@@ -9,7 +9,7 @@
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title class="filter-title">
-                        Material(s) being reproduced
+                        Material reproduced
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <mat-checkbox class="all-none-filter" [(ngModel)]="allNoneCheckBoxes['materials']" [(indeterminate)]="allNoneCheckBoxes['materialsIndeterminacy']" (change)="onFilterChange($event, 'allnone_materials')">Show all/none</mat-checkbox>
@@ -23,7 +23,7 @@
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title class="filter-title">
-                        How reproduced
+                        Reproduction method
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <mat-checkbox class="all-none-filter" [(ngModel)]="allNoneCheckBoxes['uses']" [(indeterminate)]="allNoneCheckBoxes['usesIndeterminacy']" (change)="onFilterChange($event, 'allnone_uses')">Show all/none</mat-checkbox>
@@ -58,7 +58,7 @@
                 </div>
                 <div fxFlex>
                     <mat-tab-group>
-                        <mat-tab label="By material">
+                        <mat-tab label="Material reproduced">
                             <div fxLayout='row wrap'>
                                 <div *ngFor="let item of filteredItemReproductions" fxFlex.xs="100%" fxFlex.sm="50%" fxFlex.md="100%" fxFlex.lg="50%" fxFlex.xl="33%">
                                     <mat-card>
@@ -94,7 +94,7 @@
                                 </div>
                             </div>
                         </mat-tab>
-                        <mat-tab label="By use">
+                        <mat-tab label="Reproduction method">
                             <div fxLayout='row wrap'>
                                 <div *ngFor="let item of filteredItemUses" fxFlex.xs="100%" fxFlex.sm="50%" fxFlex.md="100%" fxFlex.lg="50%" fxFlex.xl="33%">
                                     <mat-card>
