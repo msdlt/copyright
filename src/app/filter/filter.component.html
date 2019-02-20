@@ -9,7 +9,7 @@
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title class="filter-title">
-                        Materials
+                        Material(s) being reproduced
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <mat-checkbox class="all-none-filter" [(ngModel)]="allNoneCheckBoxes['materials']" [(indeterminate)]="allNoneCheckBoxes['materialsIndeterminacy']" (change)="onFilterChange($event, 'allnone_materials')">Show all/none</mat-checkbox>
@@ -23,7 +23,7 @@
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title class="filter-title">
-                        Uses
+                        How reproduced
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <mat-checkbox class="all-none-filter" [(ngModel)]="allNoneCheckBoxes['uses']" [(indeterminate)]="allNoneCheckBoxes['usesIndeterminacy']" (change)="onFilterChange($event, 'allnone_uses')">Show all/none</mat-checkbox>
@@ -96,7 +96,7 @@
                         </mat-tab>
                         <mat-tab label="By use">
                             <div fxLayout='row wrap'>
-                                <div *ngFor="let item of filteredItemUses" fxFlex.xs="100%" fxFlex.sm="50%" fxFlex.md="50%" fxFlex.lg="33%" fxFlex.xl="25%">
+                                <div *ngFor="let item of filteredItemUses" fxFlex.xs="100%" fxFlex.sm="50%" fxFlex.md="100%" fxFlex.lg="50%" fxFlex.xl="33%">
                                     <mat-card>
                                         <mat-card-header>
                                             <div *ngIf="item.use == 0" mat-card-avatar><fa-icon [icon]="faChalkboardTeacher" class="header-icon"></fa-icon></div>
