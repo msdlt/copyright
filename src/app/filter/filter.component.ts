@@ -178,12 +178,12 @@ export class FilterComponent implements OnInit, OnDestroy {
     
     //Descriptions below are used to convert human-readable enum values back into long-form text
     useDescriptions = {
-        "Presentation": "Presentation or lecture",  
-        "Recording": "Recorded presentation or lecture",  
+        "Presentation": "Show in presentation or lecture",  
+        "Recording": "Show in recorded presentation or lecture",  
         "Handout": "Distribute as a handout", 
         "VLE": "Embed in VLE materials", 
         //"Email": "Share by email", 
-        "Website": "Public website or resource (OER)", 
+        "Website": "Embed in public website or resource (OER)", 
         "Share": "Share via social media/cloud service"
     }
     
