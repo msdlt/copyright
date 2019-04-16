@@ -67,7 +67,7 @@ div.close-button-container {
   color: #2dc937;
 }
 .cla-only {
-  color: #99c140;
+  color: #e7b416;
 }
 .maybe {
   color: #e7b416;
@@ -91,6 +91,10 @@ mat-card-subtitle {
 
 h4 {
   font-family: Roboto,"Helvetica Neue",sans-serif;
+}
+p.verdict {
+  font-weight: bold;
+  margin-bottom: 0px;
 }
 
 .example-sidenav-container {

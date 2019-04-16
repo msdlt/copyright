@@ -75,7 +75,7 @@
                                         </mat-card-header>
                                         <mat-accordion>
                                             <mat-expansion-panel *ngFor="let reproductionUse of item.reproductionUses">
-                                                <mat-expansion-panel-header title="{{statusDescriptions[EnumTable.Statuses[reproductionUse.status]]}} - click for details">
+                                                <mat-expansion-panel-header [matTooltip]="statusDescriptions[EnumTable.Statuses[reproductionUse.status]] + ' - click for details'">
                                                     <mat-panel-title>
                                                         <fa-icon *ngIf="reproductionUse.status == 0" [icon]="faCheckCircle" class="status-icon free"></fa-icon>
                                                         <fa-icon *ngIf="reproductionUse.status == 1" [icon]="faCheckCircle" class="status-icon cla-only"></fa-icon>
@@ -85,9 +85,12 @@
                                                         {{useDescriptions[EnumTable.Uses[reproductionUse.use]]}}
                                                     </mat-panel-title>
                                                 </mat-expansion-panel-header>
-                                                <h4>{{statusDescriptions[EnumTable.Statuses[reproductionUse.status]]}}</h4>
-                                                <span *ngIf="reproductionUse.status != 4" [innerHTML]="reproductionUse.explanation"></span>
-                                                <span *ngIf="reproductionUse.status == 4">for this setting</span>
+                                                <p class="verdict">{{statusDescriptions[EnumTable.Statuses[reproductionUse.status]]}}</p>
+                                                <ul>
+                                                    <li *ngIf="statusDescriptionDetails[EnumTable.Statuses[reproductionUse.status]] && reproductionUse.status < 3">{{statusDescriptionDetails[EnumTable.Statuses[reproductionUse.status]]}}</li>
+                                                    <li *ngIf="useDescriptionDetails[EnumTable.Uses[reproductionUse.use]] && reproductionUse.status < 3">{{useDescriptionDetails[EnumTable.Uses[reproductionUse.use]]}}</li>
+                                                    <li [innerHTML]="reproductionUse.explanation"></li>
+                                                </ul>
                                             </mat-expansion-panel>
                                         </mat-accordion>
                                     </mat-card>    
@@ -111,7 +114,7 @@
                                         </mat-card-header>
                                         <mat-accordion>
                                             <mat-expansion-panel *ngFor="let materialReproduction of item.materialReproductions">
-                                                <mat-expansion-panel-header title="{{statusDescriptions[EnumTable.Statuses[materialReproduction.status]]}} - click for details">
+                                                <mat-expansion-panel-header [matTooltip]="statusDescriptions[EnumTable.Statuses[materialReproduction.status]] + ' - click for details'">
                                                     <mat-panel-title>
                                                         <fa-icon *ngIf="materialReproduction.status == 0" [icon]="faCheckCircle" class="status-icon free"></fa-icon>
                                                         <fa-icon *ngIf="materialReproduction.status == 1" [icon]="faCheckCircle" class="status-icon cla-only"></fa-icon>
@@ -121,9 +124,12 @@
                                                         {{reproductionDescriptions[EnumTable.Reproductions[materialReproduction.reproduction]]}} ({{EnumTable.Materials[materialReproduction.type]}})
                                                     </mat-panel-title>
                                                 </mat-expansion-panel-header>
-                                                <h4>{{statusDescriptions[EnumTable.Statuses[materialReproduction.status]]}}</h4>
-                                                <span *ngIf="materialReproduction.status != 4" [innerHTML]="materialReproduction.explanation"></span>
-                                                <span *ngIf="materialReproduction.status == 4">for this setting</span>
+                                                <p class="verdict">{{statusDescriptions[EnumTable.Statuses[materialReproduction.status]]}}</p>
+                                                <ul>
+                                                    <li *ngIf="statusDescriptionDetails[EnumTable.Statuses[materialReproduction.status]] && materialReproduction.status < 3">{{statusDescriptionDetails[EnumTable.Statuses[materialReproduction.status]]}}</li>
+                                                    <li *ngIf="useDescriptionDetails[EnumTable.Uses[item.use]] && materialReproduction.status < 3">{{useDescriptionDetails[EnumTable.Uses[item.use]]}}</li>
+                                                    <li [innerHTML]="materialReproduction.explanation"></li>
+                                                </ul>
                                             </mat-expansion-panel>
                                         </mat-accordion>
                                     </mat-card>    

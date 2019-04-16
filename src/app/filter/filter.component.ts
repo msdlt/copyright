@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
+//import { KeepHtmlPipe } from '../keep-html.pipe';
 import { 
     faBook, 
     faCheckCircle, 
@@ -67,7 +68,7 @@ import {
         YouTube, //Youtube T&C
         Section30, //Quotation (criticism and review)
         //Section31A31B, //Accessible copies for disabled users
-        Section32, //Illustration for Instruction exception subject to \"fair dealing\"
+        Section32, //Illustration for Instruction exception subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a>
         Section34, //Performing or playing a work for educational purposes
         //Research, //\"research and private study\" exception
         Unlicensed
@@ -80,7 +81,7 @@ import {
 
     enum Reproductions {
         Quotation, //Quotation
-        TextExtract, //Extract <400 words
+        //TextExtract, //Extract <400 words
         ScoreExtract, //Extract from music score
         ChapterPrinted,//Printed book chapter
         ArticlePrinted,//Printed journal article
@@ -187,9 +188,14 @@ export class FilterComponent implements OnInit, OnDestroy {
         "Share": "Share via social media/cloud service"
     }
     
+    useDescriptionDetails = {
+        "Recording": "Access restricted to students enrolled on your course",  
+        "VLE": "Access restricted to students enrolled on your course", 
+    }
+    
     reproductionDescriptions = {
         "Quotation": "Quotation",
-        "TextExtract": "Extract <400 words",
+        //"TextExtract": "Extract <400 words",
         "ScoreExtract": "Extract from music score",
         "ChapterPrinted": "Printed book chapter",
         "ArticlePrinted": "Printed journal article",
@@ -210,11 +216,17 @@ export class FilterComponent implements OnInit, OnDestroy {
     };
     
     statusDescriptions = {
-        "Free": "OK, subject to \"fair dealing\"",
+        "Free": "OK to use",
         "FreeCLA": "OK, if CLA licensed",
         "May": "Check with librarian",
         "Forbidden": "Not permitted",
         "NA": "Not appropriate"
+    };
+    
+    statusDescriptionDetails = {
+        "Free": "Acknowledge work, author and rights owner",
+        "FreeCLA": "Acknowledge work, author and rights owner AND report to CLA coordinator",
+        "May": "Acknowledge work, author and rights owner",
     };
     
     licenceDescriptions = {
@@ -229,15 +241,28 @@ export class FilterComponent implements OnInit, OnDestroy {
     };
     
     licenceLinks = {
-        "CLA": "https://www.glam.ox.ac.uk/copyright-licences",
-        "ERA": "https://www.glam.ox.ac.uk/copyright-licences",
+        "CLA": "https://www.cla.co.uk/higher-education-licence",
+        "ERA": "https://era.org.uk/the-licence/the-era-license/",
         "YouTube": "https://www.youtube.com/static?gl=GB&template=terms",
         "Section30": "https://www.gov.uk/guidance/exceptions-to-copyright#criticism-review-and-reporting-current-events",
         //"Section31A31B": "Section 31A & 31B: Accessible copies for disabled users",
         "Section32": "https://www.gov.uk/guidance/exceptions-to-copyright#teaching",
         "Section34": "https://www.gov.uk/guidance/exceptions-to-copyright#teaching",
-        "Unlicensed": "https://www.bodleian.ox.ac.uk/bodley/using-this-library/copyright"
+        "Unlicensed": "https://www.bodleian.ox.ac.uk/bodley/using-this-library/copyright",
+        "Fair dealing": "https://www.gov.uk/guidance/exceptions-to-copyright#fair-dealing"
     };
+    
+    /*useLinks = {
+        "CLA": "https://www.cla.co.uk/higher-education-licence",
+        "ERA": "https://era.org.uk/the-licence/the-era-license/",
+        "YouTube": "https://www.youtube.com/static?gl=GB&template=terms",
+        "Section30": "https://www.gov.uk/guidance/exceptions-to-copyright#criticism-review-and-reporting-current-events",
+        //"Section31A31B": "Section 31A & 31B: Accessible copies for disabled users",
+        "Section32": "https://www.gov.uk/guidance/exceptions-to-copyright#teaching",
+        "Section34": "https://www.gov.uk/guidance/exceptions-to-copyright#teaching",
+        "Unlicensed": "https://www.bodleian.ox.ac.uk/bodley/using-this-library/copyright",
+        "Fair dealing": "https://www.gov.uk/guidance/exceptions-to-copyright#fair-dealing"
+    };*/
     
     //setup which reproductions belong to which material
     materialChildren: any = new Array();
@@ -250,7 +275,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32, Licences.Section30], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a>; or <a href=\""+this.licenceLinks['Section30']+"\" target=\"_blank\">Quotation (criticism and review)</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exceptions, subject to \"fair dealing\"" 
+            "explanation": "See terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a>; or <a href=\""+this.licenceLinks['Section30']+"\" target=\"_blank\">Quotation (criticism and review)</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exceptions, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a>" 
         },
         { 
             "type": Materials.Text, 
@@ -258,7 +283,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32, Licences.Section30], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a>; or <a href=\""+this.licenceLinks['Section30']+"\" target=\"_blank\">Quotation (criticism and review)</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exceptions, subject to \"fair dealing\"" 
+            "explanation": "See terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a>; or <a href=\""+this.licenceLinks['Section30']+"\" target=\"_blank\">Quotation (criticism and review)</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exceptions, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a>" 
         },
         { 
             "type": Materials.Text, 
@@ -266,7 +291,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32, Licences.Section30], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a>; or <a href=\""+this.licenceLinks['Section30']+"\" target=\"_blank\">Quotation (criticism and review)</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exceptions, subject to \"fair dealing\"" 
+            "explanation": "See terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a>; or <a href=\""+this.licenceLinks['Section30']+"\" target=\"_blank\">Quotation (criticism and review)</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exceptions, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a>" 
         },
         { 
             "type": Materials.Text, 
@@ -274,7 +299,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32, Licences.Section30], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a>; or <a href=\""+this.licenceLinks['Section30']+"\" target=\"_blank\">Quotation (criticism and review)</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exceptions, subject to \"fair dealing\"" 
+            "explanation": "See terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a>; or <a href=\""+this.licenceLinks['Section30']+"\" target=\"_blank\">Quotation (criticism and review)</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exceptions, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a>" 
         },
         /*{ 
             "type": Materials.Text, 
@@ -290,7 +315,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.Section30], 
-            "explanation": "under <a href=\""+this.licenceLinks['Section30']+"\" target=\"_blank\">Quotation (criticism and review)</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exceptions, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>" 
+            "explanation": "See <a href=\""+this.licenceLinks['Section30']+"\" target=\"_blank\">Quotation (criticism and review)</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exceptions, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>" 
         },
         { 
             "type": Materials.Text, 
@@ -298,16 +323,16 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.Section30], 
-            "explanation": "under <a href=\""+this.licenceLinks['Section30']+"\" target=\"_blank\">Quotation (criticism and review)</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exceptions, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>" 
+            "explanation": "See <a href=\""+this.licenceLinks['Section30']+"\" target=\"_blank\">Quotation (criticism and review)</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exceptions, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>" 
         },
         //TEXT - Extract
-        { 
+        /*{ 
             "type": Materials.Text, 
             "reproduction": Reproductions.TextExtract, 
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\"" 
+            "explanation": "See terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a>" 
         },
         { 
             "type": Materials.Text, 
@@ -315,7 +340,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\"" 
+            "explanation": "See terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a>" 
         },
         { 
             "type": Materials.Text, 
@@ -323,7 +348,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\"" 
+            "explanation": "See terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a>" 
         },
         { 
             "type": Materials.Text, 
@@ -331,23 +356,23 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\"" 
+            "explanation": "See terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a>" 
         },
-        /*{ 
+        { 
             "type": Materials.Text, 
             "reproduction": Reproductions.TextExtract, 
             "use": Uses.Email, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.FairDealing], 
             "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or \"fair dealing\" exception" 
-        },*/
+        },
         { 
             "type": Materials.Text, 
             "reproduction": Reproductions.TextExtract, 
             "use": Uses.Website, 
             "status": Statuses.May, 
             "licences": [Licences.Section32],
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>" 
+            "explanation": "See <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>" 
         },
         { 
             "type": Materials.Text, 
@@ -355,8 +380,8 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.May, 
             "licences": [Licences.Section32],
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>" 
-        },
+            "explanation": "See <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>" 
+        },*/
         //TEXT - Score extract
         { 
             "type": Materials.Text, 
@@ -364,7 +389,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
             "licences": [Licences.Section32],
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\"" 
+            "explanation": "See <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a>" 
         },
         { 
             "type": Materials.Text, 
@@ -372,7 +397,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording, 
             "status": Statuses.Free, 
             "licences": [Licences.Section32],
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\"" 
+            "explanation": "See <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a>" 
         },
         { 
             "type": Materials.Text, 
@@ -380,7 +405,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.Free, 
             "licences": [Licences.Section32],
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\"" 
+            "explanation": "See <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a>" 
         },
         { 
             "type": Materials.Text, 
@@ -388,7 +413,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.Free, 
             "licences": [Licences.Section32],
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\""
+            "explanation": "See <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a>"
         },
         /*{ 
             "type": Materials.Text, 
@@ -404,7 +429,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons." 
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons." 
         },
         { 
             "type": Materials.Text, 
@@ -412,7 +437,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons." 
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons." 
         },
         //TEXT - ChapterPrinted
         { 
@@ -421,7 +446,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.NA, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "Not applicable" 
+            "explanation": "Not applicable for this setting" 
         },
         { 
             "type": Materials.Text, 
@@ -429,7 +454,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.NA, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "Not applicable"
+            "explanation": "Not applicable for this setting"
         },
         { 
             "type": Materials.Text, 
@@ -437,7 +462,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.FreeCLA,
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator"
+            "explanation": "See terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator"
         },
         { 
             "type": Materials.Text, 
@@ -445,7 +470,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.FreeCLA, 
             "licences": [Licences.CLA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator"
+            "explanation": "See terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator"
         },
         /*{ 
             "type": Materials.Text, 
@@ -461,7 +486,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons." 
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons." 
         },
         { 
             "type": Materials.Text, 
@@ -469,7 +494,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons." 
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons." 
         },
         //TEXT - ArticlePrinted
         { 
@@ -478,7 +503,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.NA, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "Not applicable"
+            "explanation": "Not applicable for this setting"
         },
         { 
             "type": Materials.Text, 
@@ -486,7 +511,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.NA, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "Not applicable"
+            "explanation": "Not applicable for this setting"
         },
         { 
             "type": Materials.Text, 
@@ -494,7 +519,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.FreeCLA,
             "licences": [Licences.CLA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator" 
+            "explanation": "See terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator" 
         },
         { 
             "type": Materials.Text, 
@@ -502,7 +527,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.FreeCLA, 
             "licences": [Licences.CLA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator"
+            "explanation": "See terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator"
         },
         /*{ 
             "type": Materials.Text, 
@@ -518,7 +543,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons." 
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons." 
         },
         { 
             "type": Materials.Text, 
@@ -526,7 +551,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons." 
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons." 
         },
         //TEXT - ChaptereBook
         { 
@@ -535,7 +560,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.NA, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "Not applicable" 
+            "explanation": "Not applicable for this setting" 
         },
         { 
             "type": Materials.Text, 
@@ -543,7 +568,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.NA, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "Not applicable"
+            "explanation": "Not applicable for this setting"
         },
         { 
             "type": Materials.Text, 
@@ -551,7 +576,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.FreeCLA,
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator" 
+            "explanation": "See terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator" 
         },
         { 
             "type": Materials.Text, 
@@ -559,7 +584,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.FreeCLA, 
             "licences": [Licences.CLA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator"
+            "explanation": "See terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator"
         },
         /*{ 
             "type": Materials.Text, 
@@ -575,7 +600,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
+            "explanation": "Not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
         },
         { 
             "type": Materials.Text, 
@@ -583,7 +608,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
+            "explanation": "Not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
         },
         //TEXT - ArticleeJournal
         { 
@@ -592,7 +617,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.NA, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "Not applicable" 
+            "explanation": "Not applicable for this setting" 
         },
         { 
             "type": Materials.Text, 
@@ -600,7 +625,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.NA, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "Not applicable"
+            "explanation": "Not applicable for this setting"
         },
         { 
             "type": Materials.Text, 
@@ -608,7 +633,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.FreeCLA,
             "licences": [Licences.CLA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator" 
+            "explanation": "See terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator" 
         },
         { 
             "type": Materials.Text, 
@@ -616,7 +641,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.FreeCLA, 
             "licences": [Licences.CLA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator"
+            "explanation": "See terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> - report to CLA coordinator"
         },
         /*{ 
             "type": Materials.Text, 
@@ -632,7 +657,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
+            "explanation": "Not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
         },
         { 
             "type": Materials.Text, 
@@ -640,7 +665,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
+            "explanation": "Not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
         },
         //TEXT - Book
         { 
@@ -649,7 +674,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
+            "explanation": "Not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
         },
         { 
             "type": Materials.Text, 
@@ -657,7 +682,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
+            "explanation": "Not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
         },
         { 
             "type": Materials.Text, 
@@ -665,7 +690,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
+            "explanation": "Not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
         },
         { 
             "type": Materials.Text, 
@@ -673,7 +698,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
+            "explanation": "Not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
         },
         /*{ 
             "type": Materials.Text, 
@@ -681,7 +706,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Email, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
+            "explanation": "Not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
         },*/
         { 
             "type": Materials.Text, 
@@ -689,7 +714,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
+            "explanation": "Not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
         },
         { 
             "type": Materials.Text, 
@@ -697,7 +722,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
+            "explanation": "Not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to e-books/e-journals" 
         },
         //Image - Internet
         { 
@@ -706,7 +731,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
             "licences": [Licences.Section32],
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\""
+            "explanation": "See <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a>"
         },
         { 
             "type": Materials.Image, 
@@ -714,7 +739,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.CLA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\"><a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a></a>" 
+            "explanation": "See terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\"><a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a></a>" 
         },
         { 
             "type": Materials.Image, 
@@ -722,7 +747,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.CLA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>" 
+            "explanation": "See terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>" 
         },
         { 
             "type": Materials.Image, 
@@ -730,7 +755,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.CLA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>" 
+            "explanation": "See terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>" 
         },
         /*{ 
             "type": Materials.Image, 
@@ -746,7 +771,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to the image (unless this is specifically forbidden by the terms and conditions of the source website)" 
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to the image (unless this is specifically forbidden by the terms and conditions of the source website)" 
         },
         { 
             "type": Materials.Image, 
@@ -754,7 +779,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to the image (unless this is specifically forbidden by the terms and conditions of the source website)" 
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to the image (unless this is specifically forbidden by the terms and conditions of the source website)" 
         },
         //Image - ImageJournalBook
         { 
@@ -763,7 +788,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\""
+            "explanation": "See terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a>"
         },
         { 
             "type": Materials.Image, 
@@ -771,7 +796,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\""
+            "explanation": "See terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a>"
         },
         { 
             "type": Materials.Image, 
@@ -779,7 +804,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.May, 
             "licences": [Licences.Section32],
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>" 
+            "explanation": "See <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>" 
         },
         { 
             "type": Materials.Image, 
@@ -787,7 +812,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.Free, 
             "licences": [Licences.CLA, Licences.Section32], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\""
+            "explanation": "See terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a>"
         },
         /*{ 
             "type": Materials.Image, 
@@ -803,7 +828,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to the image (unless this is specifically forbidden by the terms and conditions of the source website)" 
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can, of course share a link to the image (unless this is specifically forbidden by the terms and conditions of the source website)" 
         },
         { 
             "type": Materials.Image, 
@@ -811,7 +836,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.CLA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
+            "explanation": "See terms of <a href=\""+this.licenceLinks['CLA']+"\" target=\"_blank\">CLA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         //Broadcast - Box of Broadcasts
         { 
@@ -820,7 +845,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
             "licences": [Licences.ERA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a>"
+            "explanation": "See terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a>"
         },
         { 
             "type": Materials.Broadcast, 
@@ -828,7 +853,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.Free, 
             "licences": [Licences.ERA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a>"
+            "explanation": "See terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a>"
         },
         { 
             "type": Materials.Broadcast, 
@@ -836,7 +861,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.NA, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "Not applicable"
+            "explanation": "Not applicable for this setting"
         },
         { 
             "type": Materials.Broadcast, 
@@ -844,7 +869,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.Free, 
             "licences": [Licences.ERA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a>"
+            "explanation": "See terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a>"
         },
         /*{ 
             "type": Materials.Broadcast, 
@@ -860,7 +885,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can of course share a link to the programme which would only be accessible to those with access to Box of Broadcasts" 
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can of course share a link to the programme which would only be accessible to those with access to Box of Broadcasts" 
         },
         { 
             "type": Materials.Broadcast, 
@@ -868,7 +893,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can of course share a link to the programme which would only be accessible to those with access to Box of Broadcasts" 
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can of course share a link to the programme which would only be accessible to those with access to Box of Broadcasts" 
         },
         //Broadcast - BroadcastExtract
         { 
@@ -877,7 +902,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
             "licences": [Licences.ERA, Licences.Section32], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\""
+            "explanation": "See terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a>"
         },
         { 
             "type": Materials.Broadcast, 
@@ -885,7 +910,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.Free, 
             "licences": [Licences.ERA, Licences.Section32], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\""
+            "explanation": "See terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a>"
         },
         { 
             "type": Materials.Broadcast, 
@@ -893,7 +918,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.NA, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "Not applicable"
+            "explanation": "Not applicable for this setting"
         },
         { 
             "type": Materials.Broadcast, 
@@ -901,7 +926,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.Free, 
             "licences": [Licences.ERA, Licences.Section32], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\""
+            "explanation": "See terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a>"
         },
         /*{ 
             "type": Materials.Broadcast, 
@@ -917,7 +942,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can of course share a link to the programme which would only be accessible to those with access to Box of Broadcasts" 
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can of course share a link to the programme which would only be accessible to those with access to Box of Broadcasts" 
         },
         { 
             "type": Materials.Broadcast, 
@@ -925,7 +950,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.May, 
             "licences": [Licences.Section32, Licences.ERA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\"- <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
+            "explanation": "See terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> or <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a>- <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         //Broadcast - Broadcast
         { 
@@ -934,7 +959,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.May, 
             "licences": [Licences.ERA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
+            "explanation": "See terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         { 
             "type": Materials.Broadcast, 
@@ -942,7 +967,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.May, 
             "licences": [Licences.ERA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
+            "explanation": "See terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         { 
             "type": Materials.Broadcast, 
@@ -950,7 +975,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.NA, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "Not applicable"
+            "explanation": "Not applicable for this setting"
         },
         { 
             "type": Materials.Broadcast, 
@@ -958,7 +983,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.May, 
             "licences": [Licences.ERA], 
-            "explanation": "under terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
+            "explanation": "See terms of <a href=\""+this.licenceLinks['ERA']+"\" target=\"_blank\">ERA licence</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         /*{ 
             "type": Materials.Broadcast, 
@@ -974,7 +999,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can of course share a link to the programme" 
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can of course share a link to the programme" 
         },
         { 
             "type": Materials.Broadcast, 
@@ -982,7 +1007,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can of course share a link to the programme" 
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. You can of course share a link to the programme" 
         },
         //Film - Youtube official
         { 
@@ -991,7 +1016,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
             "licences": [Licences.YouTube], 
-            "explanation": "under <a href=\""+this.licenceLinks['YouTube']+"\" target=\"_blank\">YouTube terms and conditions</a>"
+            "explanation": "See <a href=\""+this.licenceLinks['YouTube']+"\" target=\"_blank\">YouTube terms and conditions</a>"
         },
         { 
             "type": Materials.Video, 
@@ -999,7 +1024,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.Free, 
             "licences": [Licences.YouTube], 
-            "explanation": "under <a href=\""+this.licenceLinks['YouTube']+"\" target=\"_blank\">YouTube terms and conditions</a>"
+            "explanation": "See <a href=\""+this.licenceLinks['YouTube']+"\" target=\"_blank\">YouTube terms and conditions</a>"
         },
         { 
             "type": Materials.Video, 
@@ -1007,7 +1032,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.Free, 
             "licences": [Licences.YouTube], 
-            "explanation": "under <a href=\""+this.licenceLinks['YouTube']+"\" target=\"_blank\">YouTube terms and conditions</a>"
+            "explanation": "See <a href=\""+this.licenceLinks['YouTube']+"\" target=\"_blank\">YouTube terms and conditions</a>"
         },
         { 
             "type": Materials.Video, 
@@ -1015,7 +1040,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.Free, 
             "licences": [Licences.YouTube], 
-            "explanation": "under <a href=\""+this.licenceLinks['YouTube']+"\" target=\"_blank\">YouTube terms and conditions</a>"
+            "explanation": "See <a href=\""+this.licenceLinks['YouTube']+"\" target=\"_blank\">YouTube terms and conditions</a>"
         },
         /*{ 
             "type": Materials.Video, 
@@ -1031,7 +1056,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.Free, 
             "licences": [Licences.YouTube], 
-            "explanation": "under <a href=\""+this.licenceLinks['YouTube']+"\" target=\"_blank\">YouTube terms and conditions</a>"
+            "explanation": "See <a href=\""+this.licenceLinks['YouTube']+"\" target=\"_blank\">YouTube terms and conditions</a>"
         },
         { 
             "type": Materials.Video, 
@@ -1039,7 +1064,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.Free, 
             "licences": [Licences.YouTube], 
-            "explanation": "under <a href=\""+this.licenceLinks['YouTube']+"\" target=\"_blank\">YouTube terms and conditions</a>"
+            "explanation": "See <a href=\""+this.licenceLinks['YouTube']+"\" target=\"_blank\">YouTube terms and conditions</a>"
         },
         //Film - Youtube untrusted
         { 
@@ -1048,7 +1073,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "low risk but not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+            "explanation": "Low risk but not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
         },
         { 
             "type": Materials.Video, 
@@ -1056,7 +1081,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. EVEN LINKING could constitute secondary infringement with both you and primary infringer liable"
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. EVEN LINKING could constitute secondary infringement with both you and primary infringer liable"
         },
         { 
             "type": Materials.Video, 
@@ -1064,7 +1089,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. EVEN LINKING could constitute secondary infringement with both you and primary infringer liable"
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. EVEN LINKING could constitute secondary infringement with both you and primary infringer liable"
         },
         { 
             "type": Materials.Video, 
@@ -1072,7 +1097,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. EVEN LINKING could constitute secondary infringement with both you and primary infringer liable"
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. EVEN LINKING could constitute secondary infringement with both you and primary infringer liable"
         },
         /*{ 
             "type": Materials.Video, 
@@ -1088,7 +1113,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. EVEN LINKING could constitute secondary infringement with both you and primary infringer liable"
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. EVEN LINKING could constitute secondary infringement with both you and primary infringer liable"
         },
         { 
             "type": Materials.Video, 
@@ -1096,7 +1121,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. EVEN LINKING could constitute secondary infringement with both you and primary infringer liable"
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons. EVEN LINKING could constitute secondary infringement with both you and primary infringer liable"
         },
         //Film - FilmExtract
         { 
@@ -1105,7 +1130,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.Free, 
             "licences": [Licences.Section32],
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\""
+            "explanation": "See <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a>"
         },
         { 
             "type": Materials.Video, 
@@ -1113,7 +1138,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
+            "explanation": "See <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         { 
             "type": Materials.Video, 
@@ -1121,7 +1146,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.NA, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "Not applicable"
+            "explanation": "Not applicable for this setting"
         },
         { 
             "type": Materials.Video, 
@@ -1129,7 +1154,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
+            "explanation": "See <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         /*{ 
             "type": Materials.Video, 
@@ -1145,7 +1170,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
         },
         { 
             "type": Materials.Video, 
@@ -1153,7 +1178,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
         },
         //Film - Entire Film
         { 
@@ -1162,7 +1187,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under \"fair dealing\" exception - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
+            "explanation": "See \"fair dealing\" exception - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         { 
             "type": Materials.Video, 
@@ -1170,7 +1195,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
         },
         { 
             "type": Materials.Video, 
@@ -1178,7 +1203,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.NA, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "Not applicable"
+            "explanation": "Not applicable for this setting"
         },
         { 
             "type": Materials.Video, 
@@ -1186,7 +1211,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
         },
         /*{ 
             "type": Materials.Video, 
@@ -1194,7 +1219,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Email, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
         },*/
         { 
             "type": Materials.Video, 
@@ -1202,7 +1227,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
         },
         { 
             "type": Materials.Video, 
@@ -1210,7 +1235,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
         },
         //Audio - Music extract
         { 
@@ -1219,7 +1244,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
+            "explanation": "See <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         { 
             "type": Materials.Audio, 
@@ -1227,7 +1252,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
+            "explanation": "See <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         { 
             "type": Materials.Audio, 
@@ -1235,7 +1260,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.NA, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "Not applicable"
+            "explanation": "Not applicable for this setting"
         },
         { 
             "type": Materials.Audio, 
@@ -1243,7 +1268,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
+            "explanation": "See <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         /*{ 
             "type": Materials.Audio, 
@@ -1259,7 +1284,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
         },
         { 
             "type": Materials.Audio, 
@@ -1267,7 +1292,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
         },
         //Audio - Sound recording
         { 
@@ -1276,7 +1301,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Presentation, 
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
+            "explanation": "See <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         { 
             "type": Materials.Audio, 
@@ -1284,7 +1309,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Recording,
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
+            "explanation": "See <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         { 
             "type": Materials.Audio, 
@@ -1292,7 +1317,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Handout, 
             "status": Statuses.NA, 
             "licences": [Licences.Unlicensed], 
-            "explanation": "Not applicable"
+            "explanation": "Not applicable for this setting"
         },
         { 
             "type": Materials.Audio, 
@@ -1300,7 +1325,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.VLE, 
             "status": Statuses.May, 
             "licences": [Licences.Section32], 
-            "explanation": "under <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to \"fair dealing\" - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
+            "explanation": "See <a href=\""+this.licenceLinks['Section32']+"\" target=\"_blank\">Illustration for Instruction</a> exception, subject to <a href=\""+this.licenceLinks['Fair dealing']+"\" target=\"_blank\">\"fair dealing\"</a> - <a href=\"https://www.bodleian.ox.ac.uk/bodley/ask\" target=\"_blank\">talk to your librarian</a>"
         },
         /*{ 
             "type": Materials.Audio, 
@@ -1308,7 +1333,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Email, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
         },*/
         { 
             "type": Materials.Audio, 
@@ -1316,7 +1341,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Website, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
         },
         { 
             "type": Materials.Audio, 
@@ -1324,7 +1349,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             "use": Uses.Share, 
             "status": Statuses.Forbidden, 
             "licences": [Licences.Unlicensed],
-            "explanation": "high risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
+            "explanation": "High risk as not covered by any licences, agreements or exceptions unless in the Public Domain, Open Access or licenced by Creative Commons."
         }
     ];
     
@@ -1341,7 +1366,7 @@ export class FilterComponent implements OnInit, OnDestroy {
         
         this.materialChildren[Materials.Text] = [
             Reproductions.Quotation, 
-            Reproductions.TextExtract, 
+            //Reproductions.TextExtract, 
             Reproductions.ScoreExtract, 
             Reproductions.ChapterPrinted, 
             Reproductions.ArticlePrinted, 
